@@ -3,10 +3,15 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Lift Coach MVP</title>
+    <title>Lusion 1.1 MVP</title>
     <style>
       body { margin: 0; background: #111; color: #eee; font-family: system-ui, sans-serif; }
       #app { max-width: 900px; margin: 0 auto; padding: 16px; }
+      button { padding: 10px 18px; font-size: 16px; cursor: pointer; }
+      #status { margin: 12px 0; min-height: 1.5em; }
+      #state { margin: 12px 0; }
+      #feedback { margin: 12px 0; }
+
       .stage {
         position: relative;
         width: 100%;
@@ -19,9 +24,54 @@
         width: 100%;
         height: 100%;
       }
-      #status { margin: 12px 0; min-height: 1.5em; }
-      #state { margin: 12px 0; }
-      #feedback { margin: 12px 0; }
+
+      .tip {
+        position: absolute; left: 12px; right: 12px; bottom: 12px; z-index: 2;
+        padding: 10px 14px; border-radius: 10px; font-size: 18px; font-weight: 600;
+        background: rgba(0, 0, 0, 0.7); color: #fff; text-align: center;
+      }
+      .tip.ready { background: rgba(0, 140, 70, 0.85); }
+
+      #guide { margin-top: 14px; padding: 12px 16px; background: #1c1c1c; border-radius: 10px; }
+      #guide h3 { margin: 0 0 8px; font-size: 16px; }
+      #guide ul { list-style: none; margin: 0 0 12px; padding: 0; }
+      #guide li { padding: 3px 0; opacity: 0.7; }
+      #guide li.ok { opacity: 1; }
+      .steps { display: flex; gap: 8px; flex-wrap: wrap; }
+      .chip { padding: 6px 12px; border-radius: 999px; background: #2a2a2a; color: #aaa; font-size: 14px; }
+      .chip.active { background: #ffd400; color: #111; font-weight: 700; }
+
+      #history { margin: 12px 0; color: #bbb; }
+      #history h3 { margin: 0 0 4px; font-size: 14px; color: #eee; }
+
+      .results-overlay {
+        position: fixed; inset: 0; z-index: 10; display: none;
+        align-items: center; justify-content: center; padding: 16px;
+        background: rgba(0, 0, 0, 0.85);
+      }
+      .results-overlay.open { display: flex; }
+      .results-card {
+        width: 100%; max-width: 480px; max-height: 100%; overflow-y: auto;
+        background: #1c1c1c; border-radius: 16px; padding: 20px 22px;
+      }
+      .results-card h2 { margin: 0 0 4px; }
+      .score { font-size: 32px; font-weight: 800; margin: 6px 0 2px; }
+      .score.good { color: #3ddc84; }
+      .score.mid { color: #ffd400; }
+      .score.low { color: #ff5c5c; }
+      .meta { color: #999; font-size: 14px; margin-bottom: 10px; }
+      .check-row {
+        display: flex; justify-content: space-between; gap: 12px;
+        padding: 8px 0; border-bottom: 1px solid #2a2a2a;
+      }
+      .check-row .name { font-weight: 600; }
+      .check-row .val { color: #aaa; font-size: 14px; text-align: right; }
+      .check-row .cue { color: #ffb4b4; font-size: 14px; margin-top: 2px; }
+      .cues { margin: 14px 0; padding: 10px 12px; background: #262626; border-radius: 10px; }
+      #next-btn {
+        width: 100%; padding: 14px; font-size: 18px; font-weight: 700;
+        background: #ffd400; color: #111; border: 0; border-radius: 10px;
+      }
     </style>
   </head>
   <body>
@@ -29,56 +79,39 @@
       <h1>Lusion 1.1 MVP</h1>
       <button id="start">Start camera</button>
       <div id="status">Click start and allow camera access.</div>
+
       <div class="stage">
         <video id="video" autoplay playsinline muted></video>
         <canvas id="overlay"></canvas>
         <div id="tip" class="tip">Click start and allow camera access.</div>
       </div>
-    </div>
-    <script type="module" src="/src/main.js"></script>
-  </body>
-</html>
-<div id="guide">
-  <h3>Before you lift</h3>
-  <ul>
-    <li id="chk-frame"><span class="icon">⬜</span> Whole body in frame, head to feet</li>
-    <li id="chk-dist"><span class="icon">⬜</span> About 2 to 3 m from the camera</li>
-    <li id="chk-side"><span class="icon">⬜</span> Standing sideways to the camera</li>
-  </ul>
-  <div class="steps">
-    <span id="step-setup" class="chip">1 · Setup</span>
-    <span id="step-pull" class="chip">2 · Pull</span>
-    <span id="step-catch" class="chip">3 · Catch &amp; stand</span>
-  </div>
-</div>
 
-<div id="state"></div>
-<div id="feedback"></div>
-      button { padding: 10px 18px; font-size: 16px; cursor: pointer; }
-      .tip {
-  position: absolute; left: 12px; right: 12px; bottom: 12px; z-index: 2;
-  padding: 10px 14px; border-radius: 10px; font-size: 18px; font-weight: 600;
-  background: rgba(0, 0, 0, 0.7); color: #fff; text-align: center;
-}
-.tip.ready { background: rgba(0, 140, 70, 0.85); }
-#guide { margin-top: 14px; padding: 12px 16px; background: #1c1c1c; border-radius: 10px; }
-#guide h3 { margin: 0 0 8px; font-size: 16px; }
-#guide ul { list-style: none; margin: 0 0 12px; padding: 0; }
-#guide li { padding: 3px 0; opacity: 0.7; }
-#guide li.ok { opacity: 1; }
-.steps { display: flex; gap: 8px; flex-wrap: wrap; }
-.chip { padding: 6px 12px; border-radius: 999px; background: #2a2a2a; color: #aaa; font-size: 14px; }
-.chip.active { background: #ffd400; color: #111; font-weight: 700; }
-    </style>
-  </head>
-  <body>
-    <div id="app">
-      <h1>Lusion 1.1 MVP</h1>
-      <button id="start">Start camera</button>
-      <div id="status">Click start and allow camera access.</div>
-      <div class="stage">
-        <video id="video" autoplay playsinline muted></video>
-        <canvas id="overlay"></canvas>
+      <div id="guide">
+        <h3>Before you lift</h3>
+        <ul>
+          <li id="chk-frame"><span class="icon">⬜</span> Whole body in frame, head to feet</li>
+          <li id="chk-dist"><span class="icon">⬜</span> About 2 to 3 m from the camera</li>
+          <li id="chk-side"><span class="icon">⬜</span> Standing sideways to the camera</li>
+        </ul>
+        <div class="steps">
+          <span id="step-setup" class="chip">1 · Setup</span>
+          <span id="step-pull" class="chip">2 · Pull</span>
+          <span id="step-catch" class="chip">3 · Catch &amp; stand</span>
+        </div>
+      </div>
+
+      <div id="state"></div>
+      <div id="history"></div>
+    </div>
+
+    <div id="results" class="results-overlay" role="dialog" aria-modal="true" aria-labelledby="results-title">
+      <div class="results-card">
+        <h2 id="results-title">Rep complete</h2>
+        <div id="results-score" class="score"></div>
+        <div id="results-meta" class="meta"></div>
+        <div id="results-checks"></div>
+        <div id="results-cues" class="cues"></div>
+        <button id="next-btn">Next rep</button>
       </div>
     </div>
     <script type="module" src="/src/main.js"></script>

@@ -5,12 +5,15 @@ let phase = "WAIT_SETUP";
 
 function tick(id, ok) {
   const el = $(id);
+  if (!el) return;
   el.classList.toggle("ok", ok);
-  el.querySelector(".icon").textContent = ok ? "✅" : "⬜";
+  const icon = el.querySelector(".icon");
+  if (icon) icon.textContent = ok ? "✅" : "⬜";
 }
 
 function showTip(text, ready) {
   const tip = $("tip");
+  if (!tip) return;
   tip.textContent = text;
   tip.classList.toggle("ready", ready);
 }
@@ -24,9 +27,9 @@ const PHASE_HINT = {
 
 export function setPhase(state) {
   phase = state;
-  $("step-setup").classList.toggle("active", state === "WAIT_SETUP" || state === "READY");
-  $("step-pull").classList.toggle("active", state === "PULL");
-  $("step-catch").classList.toggle("active", state === "CATCH");
+  $("step-setup")?.classList.toggle("active", state === "WAIT_SETUP" || state === "READY");
+  $("step-pull")?.classList.toggle("active", state === "PULL");
+  $("step-catch")?.classList.toggle("active", state === "CATCH");
 }
 
 export function updateGuide(lm, m, w) {
