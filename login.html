@@ -1,0 +1,12 @@
+<!doctype html>
+<html lang="en"><head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Log in | Lusion AI</title><link rel="icon" type="image/x-icon" href="/favicon.ico" />
+<link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/src/styles/base.css" /><link rel="stylesheet" href="/src/styles/pages.css" /></head>
+<body><header id="navbar"></header><main class="page">
+<section class="auth"><h1>Log in</h1><p class="lede">Welcome back.</p>
+<form id="auth-form" data-next="login" novalidate><label for="email">Email</label><input id="email" name="email" type="email" required autocomplete="email" /><label for="password">Password</label><input id="password" name="password" type="password" required autocomplete="current-password" minlength="8" /><label for="role">Continue as</label><select id="role" name="role"><option value="lifter">Lifter</option><option value="coach">Coach</option><option value="admin">Web admin</option></select>
+<p id="form-error" class="error" role="alert"></p><button class="btn btn-primary" type="submit">Log in</button></form>
+<p class="note">No account? <a href="/signup.html">Create one</a>. Demo build: no server yet, so any valid details continue to the dashboard.</p></section></main><footer class="foot">Lusion AI is an early MVP. Feedback is guidance, not a replacement for a qualified coach.</footer>
+<script type="module" src="/src/nav-init.js"></script><script type="module" src="/src/auth.js"></script></body></html>
