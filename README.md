@@ -66,6 +66,7 @@ npm run preview   # serve the production build locally
 
 The checklist under the video ticks off as each condition is met.
 
+<<<<<<< HEAD
 ## Buttons
 
 Every button uses the glass style (`src/styles/glass-button.css`). You do not need to add any markup: `src/glass-button.js` upgrades every `<button>`, `a.btn` and `a.nav-cta` on all pages, including ones added later by a script.
@@ -75,6 +76,8 @@ Every button uses the glass style (`src/styles/glass-button.css`). You do not ne
 - Skip a button: `data-glass="off"`
 - On a dark area, set `--foreground` and `--background` on `.glass-button-wrap` (see `session.html`)
 
+=======
+>>>>>>> 1fc4bfc35e3bc5cc721c267c06c0ca2f4f20d02f
 ## Project structure
 
 ```
