@@ -1,0 +1,108 @@
+@import "./tokens.css";
+
+/* Loaded by navbar.js on every page, so it must not restyle the page body. */
+#navbar {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background: var(--color-bg);
+  font-family: var(--font-sans);
+  color: var(--color-ink);
+}
+
+.nav-inner {
+  max-width: var(--page-width);
+  margin: 0 auto;
+  padding: 20px var(--space-4);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.nav-brand { display: inline-flex; align-items: center; text-decoration: none; }
+.nav-logo { display: block; height: 32px; width: auto; }
+.nav-wordmark { font-size: 1.4rem; font-weight: 800; letter-spacing: -0.02em; color: var(--color-ink); }
+
+/* The gray pill from the design */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  list-style: none;
+  margin: 0;
+  padding: 10px 14px 10px 28px;
+  background: var(--color-nav-pill);
+  border-radius: var(--radius-m);
+}
+
+.nav-links a:not(.glass-button) {
+  position: relative;
+  display: inline-block;
+  padding: 6px 0;
+  font-size: 1.05rem;
+  text-decoration: none;
+  color: var(--color-ink);
+}
+
+/* Yellow underline: slides in from the left on hover, slides out to the right on leave */
+.nav-links a:not(.nav-cta)::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: var(--underline-width);
+  height: 2px;
+  border-radius: 2px;
+  background: var(--color-accent);
+  transform: scaleX(0);
+  transform-origin: right center;
+  transition: transform 0.35s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+.nav-links a:not(.nav-cta):hover::after,
+.nav-links a:not(.nav-cta):focus-visible::after {
+  transform: scaleX(1);
+  transform-origin: left center;
+}
+
+/* The CTA is a glass button (see src/glass-button.js); it keeps the brand yellow */
+.nav-links .nav-cta { background-color: var(--color-accent); color: var(--color-accent-ink); }
+
+.glass-button-wrap:has(> .nav-toggle) { display: none; }
+.nav-toggle:not(.glass-button) {
+  display: none;
+  background: var(--color-nav-pill);
+  border: 0;
+  border-radius: var(--radius-s);
+  color: var(--color-ink);
+  font: inherit;
+  padding: 8px 14px;
+  cursor: pointer;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-links a:not(.nav-cta)::after { transition: none; }
+}
+
+@media (max-width: 720px) {
+  .nav-inner { padding: 14px var(--space-3); }
+  .nav-toggle:not(.glass-button) { display: inline-block; }
+  .glass-button-wrap:has(> .nav-toggle) { display: inline-block; }
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: var(--space-3);
+    right: var(--space-3);
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: var(--space-2) var(--space-3) var(--space-3);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  }
+  #navbar.open .nav-links { display: flex; }
+  .nav-links a:not(.glass-button) { display: block; padding: 12px 0; }
+  .nav-links a:not(.nav-cta)::after { bottom: 6px; }
+  .nav-links .glass-button-wrap { display: block; margin-top: var(--space-2); }
+  .nav-links .glass-button { display: block; width: 100%; text-align: center; }
+}

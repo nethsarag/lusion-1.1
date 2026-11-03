@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lusion AI: all in one AI platform for weight lifters and coaches</title>
+    <meta name="description" content="All in one AI platform for weight lifters and coaches." />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <!-- Inter is the fallback for devices without SF Pro (Windows, Android) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/src/styles/base.css" />
+    <link rel="stylesheet" href="/src/styles/pages.css" />
+    <link rel="stylesheet" href="/src/styles/home.css" />
+  </head>
+  <body>
+    <header id="navbar"></header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-copy">
+          <h1>
+            <span class="line">All in One <span class="accent">AI</span></span>
+            <span class="line"><span class="accent">Platform</span> for</span>
+            <span class="line">Weight Lifters</span>
+            <span class="line">&amp; Coaches</span>
+          </h1>
+          <p class="hero-hint" id="hero-hint">Move your cursor. Lusion is watching.</p>
+        </div>
+
+        <!-- The mascot stands here, then flies to the bottom-right corner as you scroll (src/mascot/) -->
+        <div id="mascot-anchor" class="mascot-anchor" aria-hidden="true"></div>
+      </section>
+
+      <section class="home-section" id="how">
+        <h2>How Lusion coaches your snatch</h2>
+        <p class="lede">Point your webcam at yourself, lift, and get feedback after every rep. Video stays in your browser.</p>
+        <div class="grid3">
+          <article class="card"><h3>Film yourself</h3><p>Stand sideways, whole body in frame, about 2 to 3 m from the camera. A checklist ticks off as each condition is met.</p></article>
+          <article class="card"><h3>Reps found for you</h3><p>A pose model tracks your body and follows each rep through Setup, Pull and Catch &amp; stand.</p></article>
+          <article class="card"><h3>Cues after every rep</h3><p>You get a score from five form checks and up to two short coaching cues you can act on.</p></article>
+        </div>
+        <div class="actions"><a class="btn btn-primary" href="/session.html">Start a session</a></div>
+      </section>
+
+      <section class="home-section" id="ask">
+        <h2>Questions? Ask me.</h2>
+        <p class="lede">That is me in the corner. Tap a question, or click me and type your own.</p>
+        <div class="ask-row">
+          <button type="button" data-ask="How does scoring work?">How does scoring work?</button>
+          <button type="button" data-ask="Filming tips">Filming tips</button>
+          <button type="button" data-ask="Is my video uploaded?">Is my video uploaded?</button>
+          <button type="button" data-ask="What's coming next?">What's coming next?</button>
+        </div>
+      </section>
+    </main>
+
+    <footer class="foot">Lusion AI is an early MVP. Feedback is guidance, not a replacement for a qualified coach.</footer>
+
+    <script type="module" src="/src/nav-init.js"></script>
+    <script type="module" src="/src/mascot-init.js"></script>
+  </body>
+</html>
