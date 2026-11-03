@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lusion: form feedback for your snatch</title>
+    <meta name="description" content="Point your webcam at yourself, lift, and get coaching cues after every rep. Runs in your browser." />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="stylesheet" href="/src/styles/base.css" />
+    <link rel="stylesheet" href="/src/styles/home.css" />
+  </head>
+  <body>
+    <header id="navbar"></header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-copy">
+          <h1>Find out what went wrong in your snatch before the next rep.</h1>
+          <p class="lede">Point your webcam at yourself and lift. Lusion tracks your body, spots each rep, and gives you a score with up to two coaching cues as soon as the rep is done.</p>
+          <div class="actions">
+            <a class="btn btn-primary" href="/session.html">Start a session</a>
+            <a class="btn btn-quiet" href="#how">See how a rep is read</a>
+          </div>
+          <p class="privacy">Runs in your browser. Your video never leaves your device.</p>
+        </div>
+
+        <div class="hero-figure">
+          <svg viewBox="0 0 400 480" role="img" aria-label="Skeleton overlay of a lifter in the bottom of an overhead squat catch">
+            <line x1="20" y1="432" x2="380" y2="432" stroke="#2a2a2a" stroke-width="2" />
+            <g stroke="#00e5ff" stroke-width="4" stroke-linecap="round" fill="none">
+              <line x1="110" y1="40" x2="300" y2="40" stroke="#555" stroke-width="6" />
+              <polyline points="200,150 202,95 205,40" />
+              <polyline points="200,150 165,318" />
+              <polyline points="165,318 255,298 240,420" />
+              <polyline points="222,430 240,420 290,430 222,430" />
+              <line x1="200" y1="150" x2="215" y2="112" />
+            </g>
+            <g fill="#ffd400">
+              <circle cx="205" cy="40" r="7" />
+              <circle cx="202" cy="95" r="7" />
+              <circle cx="200" cy="150" r="7" />
+              <circle cx="215" cy="112" r="7" />
+              <circle cx="165" cy="318" r="7" />
+              <circle cx="255" cy="298" r="7" />
+              <circle cx="240" cy="420" r="7" />
+              <circle cx="222" cy="430" r="6" />
+              <circle cx="290" cy="430" r="6" />
+            </g>
+          </svg>
+        </div>
+      </section>
+
+      <section id="how" class="section">
+        <h2>Every rep, read in three phases</h2>
+        <ol class="phases">
+          <li>
+            <h3>1. Setup</h3>
+            <p>Lusion checks your back angle at the start, so you begin with your chest up.</p>
+          </li>
+          <li>
+            <h3>2. Pull</h3>
+            <p>It measures hip and knee extension at the top of the pull, and how close the bar stays to your body.</p>
+          </li>
+          <li>
+            <h3>3. Catch and stand</h3>
+            <p>It looks at catch depth and elbow lockout overhead, then shows your results.</p>
+          </li>
+        </ol>
+      </section>
+
+      <section id="checks" class="section">
+        <h2>Five checks after every rep</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th scope="col">Check</th><th scope="col">What it looks at</th><th scope="col">Cue you might see</th></tr>
+            </thead>
+            <tbody>
+              <tr><th scope="row">Setup position</th><td>Back angle from vertical at the start</td><td>Chest higher at the start.</td></tr>
+              <tr><th scope="row">Extension</th><td>Hip and knee angle at the top of the pull</td><td>Finish the extension before pulling under.</td></tr>
+              <tr><th scope="row">Bar close to body</th><td>Wrist-to-ankle drift, in torso lengths</td><td>Keep the bar close to your body.</td></tr>
+              <tr><th scope="row">Catch depth</th><td>Hip height relative to the knee</td><td>Sit deeper in the catch.</td></tr>
+              <tr><th scope="row">Lockout</th><td>Elbow angle overhead</td><td>Lock your elbows overhead.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="note">Lusion does not track the bar. Your wrists stand in for it.</p>
+      </section>
+
+      <section class="section closing">
+        <h2>Set up the camera and lift</h2>
+        <p>Stand sideways to the camera with your whole body in frame, about 2 to 3 m away. A checklist on the session page ticks off as each condition is met.</p>
+        <a class="btn btn-primary" href="/session.html">Start a session</a>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>Lusion 1.1 is an early MVP and supports the snatch only. Treat the feedback as guidance, not as a replacement for a qualified coach.</p>
+    </footer>
+
+    <script type="module" src="/src/nav-init.js"></script>
+  </body>
+</html>

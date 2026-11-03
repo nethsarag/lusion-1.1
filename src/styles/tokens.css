@@ -1,0 +1,28 @@
+/* Design tokens. When the Day 1 palette and typography are final,
+   change the values here and every page follows. */
+:root {
+  --color-bg: #111;
+  --color-surface: #1c1c1c;
+  --color-surface-2: #262626;
+  --color-line: #2a2a2a;
+  --color-text: #eee;
+  --color-muted: #aaa;
+  --color-accent: #ffd400;
+  --color-accent-ink: #111;
+  --color-skeleton: #00e5ff;
+
+  --font-sans: "Avenir Next", "Segoe UI", system-ui, -apple-system, sans-serif;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 16px;
+  --space-4: 24px;
+  --space-5: 48px;
+  --space-6: 96px;
+
+  --radius-s: 6px;
+  --radius-m: 10px;
+
+  --page-width: 1080px;
+  --nav-height: 60px;
+}

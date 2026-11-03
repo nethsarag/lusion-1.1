@@ -1,0 +1,101 @@
+@import "./tokens.css";
+
+/* Loaded by navbar.js on every page, so it must not restyle the page body. */
+#navbar {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background: var(--color-bg);
+  border-bottom: 1px solid var(--color-line);
+  font-family: var(--font-sans);
+  color: var(--color-text);
+}
+
+.nav-inner {
+  max-width: var(--page-width);
+  height: var(--nav-height);
+  margin: 0 auto;
+  padding: 0 var(--space-3);
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.nav-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  margin-right: auto;
+}
+.nav-brand-mark {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--color-accent);
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.nav-links a {
+  text-decoration: none;
+  color: var(--color-muted);
+  padding: var(--space-2) 0;
+  border-bottom: 2px solid transparent;
+}
+.nav-links a:hover { color: var(--color-text); }
+.nav-links a[aria-current="page"] {
+  color: var(--color-text);
+  border-bottom-color: var(--color-accent);
+}
+
+.nav-links .nav-cta {
+  background: var(--color-accent);
+  color: var(--color-accent-ink);
+  font-weight: 700;
+  padding: 8px 16px;
+  border-radius: var(--radius-s);
+  border-bottom: 0;
+}
+.nav-links .nav-cta:hover { color: var(--color-accent-ink); filter: brightness(1.08); }
+.nav-links .nav-cta[aria-current="page"] { outline: 2px solid var(--color-text); outline-offset: 2px; }
+
+.nav-toggle {
+  display: none;
+  background: none;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-s);
+  color: var(--color-text);
+  font: inherit;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+@media (max-width: 720px) {
+  .nav-toggle { display: inline-block; }
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: var(--space-2) var(--space-3) var(--space-3);
+    background: var(--color-bg);
+    border-bottom: 1px solid var(--color-line);
+  }
+  #navbar.open .nav-links { display: flex; }
+  .nav-links a { display: block; padding: 12px 0; border-bottom: 0; }
+  .nav-links .nav-cta { text-align: center; margin-top: var(--space-2); }
+}
