@@ -1,13 +1,16 @@
 import "../styles/navbar.css";
 
 // Edit these arrays to change the navbar on every page.
-// Role-based links (coach, admin) can be added later by filtering this list.
 export const NAV_LINKS = [
-  { label: "Home", href: "/" },
-  { label: "How it works", href: "/#how" },
-  { label: "Form checks", href: "/#checks" },
+  { label: "Pricing", href: "/pricing.html" },
+  { label: "Resources", href: "/resources.html" },
+  { label: "About us", href: "/about.html" },
+  { label: "Log in", href: "/login.html" },
 ];
-export const NAV_CTA = { label: "Start session", href: "/session.html" };
+export const NAV_CTA = { label: "Get Started", href: "/signup.html" };
+
+// Logo file: public/images/lusion-logo.png
+const LOGO_SRC = "/images/lusion-logo.png";
 
 function isCurrent(href) {
   if (href.includes("#")) return false; // anchors are never the "current page"
@@ -23,6 +26,8 @@ function makeLink({ label, href }, className) {
   a.textContent = label;
   if (className) a.className = className;
   if (isCurrent(href)) a.setAttribute("aria-current", "page");
+  // "#" links are placeholders for pages that do not exist yet: do not jump to the top
+  if (href === "#") a.addEventListener("click", (e) => e.preventDefault());
   li.append(a);
   return li;
 }
@@ -42,7 +47,24 @@ export function mountNavbar() {
   const brand = document.createElement("a");
   brand.className = "nav-brand";
   brand.href = "/";
-  brand.innerHTML = '<span class="nav-brand-mark" aria-hidden="true"></span>Lusion';
+  brand.setAttribute("aria-label", "Lusion AI home");
+  const logo = document.createElement("img");
+  logo.className = "nav-logo";
+  logo.src = LOGO_SRC;
+  logo.alt = "Lusion AI";
+  logo.decoding = "async";
+  // If the logo file is missing, show a text wordmark instead of a broken image
+  logo.addEventListener(
+    "error",
+    () => {
+      const word = document.createElement("span");
+      word.className = "nav-wordmark";
+      word.textContent = "Lusion AI";
+      logo.replaceWith(word);
+    },
+    { once: true }
+  );
+  brand.append(logo);
 
   const toggle = document.createElement("button");
   toggle.className = "nav-toggle";
@@ -57,14 +79,21 @@ export function mountNavbar() {
   NAV_LINKS.forEach((l) => list.append(makeLink(l)));
   list.append(makeLink(NAV_CTA, "nav-cta"));
 
+  const closeMenu = () => {
+    header.classList.remove("open");
+    toggle.setAttribute("aria-expanded", "false");
+  };
   toggle.addEventListener("click", () => {
     const open = header.classList.toggle("open");
     toggle.setAttribute("aria-expanded", String(open));
   });
   list.addEventListener("click", (e) => {
-    if (e.target.closest("a")) {
-      header.classList.remove("open");
-      toggle.setAttribute("aria-expanded", "false");
+    if (e.target.closest("a")) closeMenu();
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && header.classList.contains("open")) {
+      closeMenu();
+      toggle.focus();
     }
   });
 

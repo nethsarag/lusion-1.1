@@ -22,6 +22,7 @@
 
 .nav-brand { display: inline-flex; align-items: center; text-decoration: none; }
 .nav-logo { display: block; height: 32px; width: auto; }
+.nav-wordmark { font-size: 1.4rem; font-weight: 800; letter-spacing: -0.02em; color: var(--color-ink); }
 
 /* The gray pill from the design */
 .nav-links {

@@ -1,0 +1,13 @@
+<!doctype html>
+<html lang="en"><head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Get started | Lusion AI</title><link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/src/styles/base.css" /><link rel="stylesheet" href="/src/styles/pages.css" /></head>
+<body><header id="navbar"></header><main class="page">
+<section class="auth"><h1>Create your account</h1><p class="lede">Join as a lifter or as a coach.</p>
+<form id="auth-form" data-next="signup" novalidate><label for="name">Full name</label><input id="name" name="name" type="text" required autocomplete="name" /><label for="email">Email</label><input id="email" name="email" type="email" required autocomplete="email" /><label for="password">Password (8+ characters)</label><input id="password" name="password" type="password" required autocomplete="new-password" minlength="8" /><label for="role">I am a</label><select id="role" name="role"><option value="lifter">Lifter</option><option value="coach">Coach</option></select>
+<label for="referral">Referral code (optional)</label><input id="referral" name="referral" type="text" autocomplete="off" />
+<p id="form-error" class="error" role="alert"></p><button class="btn btn-primary" type="submit">Create account</button></form>
+<p class="note">Already registered? <a href="/login.html">Log in</a>. Demo build: no server yet.</p></section></main><footer class="foot">Lusion AI is an early MVP. Feedback is guidance, not a replacement for a qualified coach.</footer>
+<script type="module" src="/src/nav-init.js"></script><script type="module" src="/src/auth.js"></script></body></html>
