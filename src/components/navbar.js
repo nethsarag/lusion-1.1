@@ -9,8 +9,8 @@ export const NAV_LINKS = [
 ];
 export const NAV_CTA = { label: "Get Started", href: "/signup.html" };
 
-// Logo file: public/images/lusion-logo.png
-const LOGO_SRC = "/images/lusion-logo.png";
+// Logo file: public/images/logo.svg
+const LOGO_SRC = "/images/logo.svg";
 
 function isCurrent(href) {
   if (href.includes("#")) return false; // anchors are never the "current page"
