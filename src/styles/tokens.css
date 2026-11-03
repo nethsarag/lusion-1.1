@@ -1,17 +1,18 @@
-/* Design tokens. When the Day 1 palette and typography are final,
-   change the values here and every page follows. */
+/* Design tokens. Change values here and every page follows. */
 :root {
-  --color-bg: #111;
-  --color-surface: #1c1c1c;
-  --color-surface-2: #262626;
-  --color-line: #2a2a2a;
-  --color-text: #eee;
-  --color-muted: #aaa;
-  --color-accent: #ffd400;
-  --color-accent-ink: #111;
-  --color-skeleton: #00e5ff;
+  --color-bg: #fff;
+  --color-ink: #0b0b0b;
+  --color-muted: #555;
+  --color-line: #e8e8e8;
+  --color-accent: #ffd633;
+  --color-accent-ink: #0b0b0b;
+  --color-nav-pill: #f6f6f6;
 
-  --font-sans: "Avenir Next", "Segoe UI", system-ui, -apple-system, sans-serif;
+  /* SF Pro renders on Apple devices; Inter is the close fallback elsewhere. */
+  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text",
+    "Inter", "Segoe UI", system-ui, sans-serif;
+  /* Heading font. Replace with the display font used in the Figma heading. */
+  --font-display: var(--font-sans);
 
   --space-1: 4px;
   --space-2: 8px;
@@ -20,9 +21,9 @@
   --space-5: 48px;
   --space-6: 96px;
 
-  --radius-s: 6px;
-  --radius-m: 10px;
+  --radius-s: 10px;
+  --radius-m: 14px;
 
-  --page-width: 1080px;
-  --nav-height: 60px;
+  --page-width: 1200px;
+  --underline-width: 60%;
 }
