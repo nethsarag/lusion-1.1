@@ -11,12 +11,22 @@
 .card p { margin: 0; color: var(--color-muted); }
 .card ul { padding-left: 1.1em; color: var(--color-muted); }
 .price { font-weight: 600; color: var(--color-ink) !important; margin-bottom: var(--space-2) !important; }
+<<<<<<< HEAD
+/* Buttons: src/glass-button.js upgrades every button to the glass style.
+   The plain styles below are only a fallback for a button not yet upgraded. */
+.btn:not(.glass-button) { display: inline-block; padding: 12px 22px; border: 0; border-radius: var(--radius-s); font: inherit; font-weight: 600; text-decoration: none; cursor: pointer; }
+.btn-primary:not(.glass-button) { background: var(--color-accent); color: var(--color-accent-ink); }
+.btn-quiet:not(.glass-button) { background: #fff; border: 1px solid var(--color-line); padding: 6px 14px; color: var(--color-ink); }
+.actions { margin: var(--space-4) 0; }
+.table-wrap { overflow-x: auto; padding-bottom: var(--space-2); } /* room for the button shadow */
+=======
 .btn { display: inline-block; padding: 12px 22px; border: 0; border-radius: var(--radius-s); font: inherit; font-weight: 600; text-decoration: none; cursor: pointer; }
 .btn-primary { background: var(--color-accent); color: var(--color-accent-ink); }
 .btn-primary:hover { filter: brightness(0.96); }
 .btn-quiet { background: #fff; border: 1px solid var(--color-line); padding: 6px 14px; color: var(--color-ink); }
 .actions { margin: var(--space-4) 0; }
 .table-wrap { overflow-x: auto; }
+>>>>>>> 1fc4bfc35e3bc5cc721c267c06c0ca2f4f20d02f
 table { width: 100%; border-collapse: collapse; min-width: 520px; }
 th, td { text-align: left; padding: 12px 16px 12px 0; border-bottom: 1px solid var(--color-line); vertical-align: middle; }
 th { color: var(--color-muted); font-weight: 600; font-size: 0.95rem; }
@@ -26,10 +36,20 @@ th { color: var(--color-muted); font-weight: 600; font-size: 0.95rem; }
 label { font-weight: 600; margin-top: var(--space-2); }
 input, select { font: inherit; padding: 12px 14px; border: 1px solid var(--color-line); border-radius: var(--radius-s); background: #fff; color: var(--color-ink); }
 input:focus-visible, select:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 1px; }
+<<<<<<< HEAD
+.auth .btn:not(.glass-button) { margin-top: var(--space-3); }
+.auth .glass-button-wrap { display: block; margin-top: var(--space-3); }
+.auth .glass-button { display: block; width: 100%; }
+.error { color: #b3261e; min-height: 1.4em; margin: var(--space-2) 0 0; }
+.chat { display: flex; gap: var(--space-2); max-width: 560px; }
+.chat input { flex: 1; }
+.chat .glass-button-wrap { align-self: center; }
+=======
 .auth .btn { margin-top: var(--space-3); }
 .error { color: #b3261e; min-height: 1.4em; margin: var(--space-2) 0 0; }
 .chat { display: flex; gap: var(--space-2); max-width: 560px; }
 .chat input { flex: 1; }
+>>>>>>> 1fc4bfc35e3bc5cc721c267c06c0ca2f4f20d02f
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
 .foot { max-width: var(--page-width); margin: 0 auto; padding: var(--space-4); color: var(--color-muted); font-size: 0.9rem; border-top: 1px solid var(--color-line); }
 @media (max-width: 820px) { .grid2, .grid3 { grid-template-columns: 1fr; } }

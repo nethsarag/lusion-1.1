@@ -8,7 +8,12 @@
     <style>
       body { margin: 0; background: #111; color: #eee; font-family: system-ui, sans-serif; }
       #app { max-width: 900px; margin: 0 auto; padding: 16px; }
+<<<<<<< HEAD
+      /* Dark areas of this page: light glass. The white navbar keeps the default. */
+      #app .glass-button-wrap, .results-card .glass-button-wrap { --foreground: #f2f2f2; --background: #111; }
+=======
       button { padding: 10px 18px; font-size: 16px; cursor: pointer; }
+>>>>>>> 1fc4bfc35e3bc5cc721c267c06c0ca2f4f20d02f
       #status { margin: 12px 0; min-height: 1.5em; }
       #state { margin: 12px 0; }
       #feedback { margin: 12px 0; }
@@ -69,10 +74,16 @@
       .check-row .val { color: #aaa; font-size: 14px; text-align: right; }
       .check-row .cue { color: #ffb4b4; font-size: 14px; margin-top: 2px; }
       .cues { margin: 14px 0; padding: 10px 12px; background: #262626; border-radius: 10px; }
+<<<<<<< HEAD
+      .results-card .glass-button-wrap, .results-card .glass-button { display: block; width: 100%; }
+      #next-btn { background-color: #ffd400; }
+      .results-card #next-btn .glass-button-text { color: #111; }
+=======
       #next-btn {
         width: 100%; padding: 14px; font-size: 18px; font-weight: 700;
         background: #ffd400; color: #111; border: 0; border-radius: 10px;
       }
+>>>>>>> 1fc4bfc35e3bc5cc721c267c06c0ca2f4f20d02f
     </style>
   </head>
   <body>
@@ -113,7 +124,11 @@
         <div id="results-meta" class="meta"></div>
         <div id="results-checks"></div>
         <div id="results-cues" class="cues"></div>
+<<<<<<< HEAD
+        <button id="next-btn" data-glass-size="lg">Next rep</button>
+=======
         <button id="next-btn">Next rep</button>
+>>>>>>> 1fc4bfc35e3bc5cc721c267c06c0ca2f4f20d02f
       </div>
     </div>
     <script type="module" src="/src/nav-init.js"></script>
