@@ -1,0 +1,129 @@
+/* Get Started page (signup.html). Buttons stay glass: src/glass-button.js upgrades them. */
+
+.gs-page { max-width: var(--page-width); margin: 0 auto; padding: 96px var(--space-4) var(--space-6); }
+
+/* Card: yellow outline that fades to light grey toward the bottom */
+.gs-card {
+  position: relative;
+  width: min(610px, 100%);
+  margin: 0 auto;
+  padding: 92px clamp(24px, 8vw, 78px) 44px;
+  border: 4px solid transparent;
+  border-radius: 46px;
+  background:
+    linear-gradient(#fff, #fff) padding-box,
+    linear-gradient(180deg, var(--color-accent) 0%, var(--color-accent) 30%, #f1f0ea 100%) border-box;
+  box-shadow: 0 24px 60px rgba(255, 214, 51, 0.12);
+  text-align: center;
+}
+
+/* Round badge that sits on the top edge and holds the mascot */
+.gs-badge {
+  position: absolute;
+  top: -72px;
+  left: 50%;
+  width: 144px;
+  height: 144px;
+  transform: translateX(-50%);
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--color-accent);
+  border-radius: 50%;
+  background: #fff;
+}
+.gs-mascot-slot { width: 90px; height: 90px; }
+
+.gs-card h1 {
+  margin: 0 0 28px;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 6vw, 2.9rem);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+
+.gs-form { display: grid; gap: 18px; max-width: 452px; margin: 0 auto; text-align: left; }
+
+.gs-form input:not([type="hidden"]) {
+  width: 100%;
+  height: 58px;
+  padding: 0 28px;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  background: #e8e8e8;
+  color: var(--color-ink);
+  font: inherit;
+  font-size: 1.15rem;
+  font-weight: 300;
+  transition: background 0.25s, border-color 0.25s, box-shadow 0.25s;
+}
+.gs-form input::placeholder { color: #8b8b8b; opacity: 1; }
+.gs-form input:hover { background: #e2e2e2; }
+.gs-form input:focus { outline: 0; background: #fff; border-color: var(--color-accent); box-shadow: 0 0 0 5px rgba(255, 214, 51, 0.28); }
+.gs-form input:-webkit-autofill { -webkit-box-shadow: 0 0 0 60px #e8e8e8 inset; }
+
+/* Role row */
+.gs-role-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin-top: 4px; }
+.gs-role-label { padding: 15px 0 0 28px; font-size: 1.15rem; font-weight: 500; }
+.gs-role { position: relative; width: 172px; flex: none; }
+
+.gs-role .glass-button-wrap { display: block; }
+.gs-role .glass-button { display: block; width: 100%; }
+.gs-role .glass-button-text { display: flex; align-items: center; justify-content: space-between; padding: 0.85rem 1.5rem; letter-spacing: -0.02em; font-size: 1.15rem; }
+
+.gs-caret {
+  width: 0; height: 0;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-top: 11px solid currentColor;
+  transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.gs-role-trigger[aria-expanded="true"] .gs-caret { transform: rotate(180deg); }
+
+.gs-role-list { position: absolute; top: 100%; left: 0; right: 0; z-index: 6; margin-top: 10px; display: grid; gap: 8px; animation: gs-drop 0.25s cubic-bezier(0.25, 1, 0.5, 1); }
+.gs-role-list[hidden] { display: none; }
+@keyframes gs-drop { from { opacity: 0; transform: translateY(-6px); } }
+.gs-option.glass-button { background-color: #fff; }
+.gs-option .glass-button-text { color: #7d7d7d; font-size: 1.1rem; justify-content: flex-start; }
+.gs-option:hover .glass-button-text, .gs-option:focus-visible .glass-button-text { color: var(--color-ink); }
+.gs-option.glass-button:hover { background-color: #fff8d6; }
+
+.gs-error { min-height: 1.3em; margin: -6px 0 -6px; text-align: center; font-size: 0.95rem; }
+
+/* Create account + Google: full width glass */
+.gs-form > .glass-button-wrap { display: block; width: min(372px, 100%); margin: 0 auto; }
+.gs-form > .glass-button-wrap .glass-button { display: block; width: 100%; }
+.gs-form > .glass-button-wrap .glass-button-text { font-size: 1.1rem; padding: 0.95rem 1.5rem; text-align: center; letter-spacing: -0.02em; }
+.gs-submit.glass-button { background-color: var(--color-accent); }
+
+/* Google: white glass with a soft rainbow rim, as in the design */
+.gs-google.glass-button {
+  border: 1.5px solid transparent;
+  background:
+    linear-gradient(#fff, #fff) padding-box,
+    linear-gradient(100deg, #f4a8c8, #ffd633 35%, #8fe3d3 70%, #8fb4ff) border-box;
+}
+.gs-google .glass-button-text { font-weight: 600; }
+
+.gs-note { text-align: center; margin-top: var(--space-4); }
+
+/* Entrance */
+.gs-card { animation: gs-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) both; }
+@keyframes gs-in { from { opacity: 0; transform: translateY(16px); } }
+
+/* Wrong-input shake on the card */
+.gs-card.is-shake { animation: gs-shake 0.45s ease; }
+@keyframes gs-shake { 20%, 60% { transform: translateX(-6px); } 40%, 80% { transform: translateX(6px); } }
+
+@media (max-width: 560px) {
+  .gs-page { padding-top: 88px; }
+  .gs-role-row { flex-direction: column; align-items: stretch; }
+  .gs-role-label { padding: 0 0 0 4px; }
+  .gs-role { width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .gs-card, .gs-card.is-shake, .gs-role-list { animation: none; }
+  .gs-caret, .gs-form input { transition: none; }
+}
+.glass-button-wrap[hidden] { display: none !important; }

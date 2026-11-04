@@ -1,0 +1,29 @@
+/* Design tokens. Change values here and every page follows. */
+:root {
+  --color-bg: #fff;
+  --color-ink: #0b0b0b;
+  --color-muted: #555;
+  --color-line: #e8e8e8;
+  --color-accent: #ffd633;
+  --color-accent-ink: #0b0b0b;
+  --color-nav-pill: #f7f7f7;
+
+  /* SF Pro renders on Apple devices; Inter is the close fallback elsewhere. */
+  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text",
+    "Inter", "Segoe UI", system-ui, sans-serif;
+  /* Heading font. Replace with the display font used in the Figma heading. */
+  --font-display: var(--font-sans);
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 16px;
+  --space-4: 24px;
+  --space-5: 48px;
+  --space-6: 96px;
+
+  --radius-s: 10px;
+  --radius-m: 14px;
+
+  --page-width: 1200px;
+  --underline-width: 100%;
+}
