@@ -1,12 +1,9 @@
 import "../styles/navbar.css";
 
-// Order follows the design: Home, Pricing, Features, About us, Log in, Get Started.
-// (resources.html still exists; add { label: "Resources", href: "/resources.html" } to bring it back.)
 // Edit these arrays to change the navbar on every page.
 export const NAV_LINKS = [
-  { label: "Home", href: "/" },
   { label: "Pricing", href: "/pricing.html" },
-  { label: "Features", href: "/#how" },
+  { label: "Resources", href: "/resources.html" },
   { label: "About us", href: "/about.html" },
   { label: "Log in", href: "/login.html" },
 ];

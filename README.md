@@ -66,7 +66,6 @@ npm run preview   # serve the production build locally
 
 The checklist under the video ticks off as each condition is met.
 
-<<<<<<< HEAD
 ## Buttons
 
 Every button uses the glass style (`src/styles/glass-button.css`). You do not need to add any markup: `src/glass-button.js` upgrades every `<button>`, `a.btn` and `a.nav-cta` on all pages, including ones added later by a script.
@@ -76,8 +75,15 @@ Every button uses the glass style (`src/styles/glass-button.css`). You do not ne
 - Skip a button: `data-glass="off"`
 - On a dark area, set `--foreground` and `--background` on `.glass-button-wrap` (see `session.html`)
 
-=======
->>>>>>> 1fc4bfc35e3bc5cc721c267c06c0ca2f4f20d02f
+## Mascot
+
+The home page mascot (`src/mascot/`) is the logo rebuilt as a live vector: eyes and moustache move on their own, follow the cursor and change expression by where the cursor is. It stands big in `#mascot-anchor` on the hero, flies to the bottom-right corner as you scroll, and becomes the chat helper.
+
+- `mascot.js`: rig, emotes, cursor tracking, hero to corner motion
+- `chat.js` and `brain.js`: chat panel and its answers. The helper is offline and answers from the project guide. To use a real AI, replace `ask()` in `brain.js` with a call to your backend that returns `{ text, chips?, mood? }`
+- Any element with `data-ask="question"` opens the chat and asks it
+- To show the mascot on every page, load `src/mascot-init.js` there (without `#mascot-anchor` it lives in the corner)
+
 ## Project structure
 
 ```
