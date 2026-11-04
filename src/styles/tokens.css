@@ -6,7 +6,7 @@
   --color-line: #e8e8e8;
   --color-accent: #ffd633;
   --color-accent-ink: #0b0b0b;
-  --color-nav-pill: #f6f6f6;
+  --color-nav-pill: #f7f7f7;
 
   /* SF Pro renders on Apple devices; Inter is the close fallback elsewhere. */
   --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text",
@@ -25,5 +25,5 @@
   --radius-m: 14px;
 
   --page-width: 1200px;
-  --underline-width: 60%;
+  --underline-width: 100%;
 }

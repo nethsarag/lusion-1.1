@@ -236,3 +236,13 @@
   .mascot-chat, .mascot-chat.open { transition: opacity 0.1s; }
   .chat-log { scroll-behavior: auto; }
 }
+
+/* Pinned mascot: lives inside the Get Started card (see src/signup-init.js) */
+.mascot.is-pinned { z-index: 4; } /* stays under the sticky navbar when the page scrolls */
+.mascot.is-pinned .mascot-shadow { display: none; }
+.mascot.is-pinned .mascot-glow { inset: -22%; }
+.mascot.is-pinned .mascot-bubble { left: calc(100% + 34px); right: auto; top: 50%; transform: translateY(-50%) scale(0.9); transform-origin: 0 50%; }
+.mascot.is-pinned .mascot-bubble.show { transform: translateY(-50%); }
+.mascot.is-pinned .mascot-bubble::after { left: -7px; right: auto; top: calc(50% - 6px); transform: rotate(135deg); }
+/* No room for the bubble above the card on phones (the navbar covers it) */
+@media (max-width: 560px) { .mascot.is-pinned .mascot-bubble { display: none; } }

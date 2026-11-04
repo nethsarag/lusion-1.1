@@ -50,6 +50,7 @@ const EMOTES = {
   happy: { L: eye(68, -52, 0, -5), R: eye(68, -52, 0, 5), mus: mus(0, -8, 0, 1.03, 1.12), face: face(0, 1, 0.99) },
   sleepy: { L: eye(108, -8), R: eye(108, -8), mus: mus(0, 6, 0, 1, 0.94), face: face(2.5) },
   thinking: { L: eye(46, 0, 0, -3), R: eye(-14, 6), mus: mus(-10, 2, -5), face: face(-2) },
+  shy: { L: eye(98, -98, 0, -4), R: eye(98, -98, 0, 4), mus: mus(0, 6, 0, 1, 0.95), face: face(0, 1, 0.98) },
   wink: { L: eye(-4, 4), R: eye(98, -98), mus: mus(0, -5, 2, 1, 1.08), face: face(1.5) },
   squeeze: { L: eye(60, -60, 0, -8), R: eye(60, -60, 0, 8), mus: mus(0, 10, 0, 1, 0.9), face: face(0, 1.06, 0.94) },
 };
@@ -77,8 +78,12 @@ export class Mascot {
    * @param {{anchor?: HTMLElement|null}} opts  anchor = the hero placeholder.
    * Without an anchor the mascot lives in the corner only.
    */
-  constructor({ anchor = null } = {}) {
+  constructor({ anchor = null, pinned = false } = {}) {
     this.anchor = anchor;
+    // pinned: stay on the anchor (no scroll-to-corner flight, no chat). Used inside the Get Started card.
+    this.pinned = pinned;
+    this.look = null; // {x, y, until, emote}: look at a point on the page (form fields)
+    this.holdName = null; // emote held while a field has focus
     this.heroEl = anchor ? anchor.closest(".hero") || anchor : null;
     this.mode = anchor ? "hero" : "dock";
     this.onActivate = null; // called when the docked mascot is clicked
@@ -119,6 +124,7 @@ export class Mascot {
     const root = document.createElement("div");
     root.className = "mascot";
     root.dataset.mode = this.mode;
+    if (this.pinned) root.classList.add("is-pinned");
     root.innerHTML = `
       <div class="mascot-glow"></div>
       <div class="mascot-shadow"></div>
@@ -224,7 +230,10 @@ export class Mascot {
 
     this.hit.addEventListener("pointerdown", () => this.boop());
     this.hit.addEventListener("click", () => {
-      if (this.mode === "hero") {
+      if (this.pinned) {
+        this.say(pick(["Hi! I'm Lusion. Let's get you set up.", "Psst. Pick your role below.", "Your lifts, my eyes."]), 2800);
+        this.reactNow("wink", 1.1);
+      } else if (this.mode === "hero") {
         this.say(matchMedia("(hover: none)").matches ? "Hi! Scroll down and I'll wait in the corner." : "Hi! Scroll down and I'll wait in the corner for you.", 3200);
         this.reactNow("wink", 1.1);
       } else {
@@ -273,6 +282,45 @@ export class Mascot {
     this.hit.focus();
   }
 
+  // ---- Form helpers (Get Started page) ---------------------------------------
+  /** Look at a point on the page for a while. */
+  lookAt(x, y, seconds = 2.5, emote = "curiousL") {
+    this.look = { x, y, until: performance.now() / 1000 + seconds, emote };
+    this.poke();
+  }
+
+  /** Look at the middle of an element, optionally at a fraction across it (0..1). */
+  lookAtEl(el, frac = 0.5, seconds = 2.5, emote = "curiousL") {
+    const r = el.getBoundingClientRect();
+    this.lookAt(r.left + r.width * frac, r.top + r.height / 2, seconds, emote);
+  }
+
+  /** Hold an emote (e.g. "shy" while a password is typed). Pass null to release. */
+  hold(name) {
+    this.holdName = name;
+    this.poke();
+  }
+
+  /** Counts as activity, so typing keeps the mascot awake. */
+  poke() {
+    this.ptr.lastMove = performance.now() / 1000;
+    if (this.sleeping) this.reactNow("wide", 0.5);
+  }
+
+  /** Shake the head "no". */
+  shake() {
+    this.sp["face.rot"].v = 900;
+    this.sp["mus.rot"].v = -600;
+    this.reactNow("skepticL", 1.4);
+  }
+
+  /** Happy hop. */
+  cheer(seconds = 1.6) {
+    this.sp.boop.x = 0;
+    this.sp.boop.v = 7;
+    this.reactNow("happy", seconds);
+  }
+
   // ---- Layout: hero spot -> corner, driven by scroll ----------------------------
   layout(dt) {
     const vw = document.documentElement.clientWidth;
@@ -293,7 +341,7 @@ export class Mascot {
     if (this.anchor) {
       ar = this.anchor.getBoundingClientRect();
       const heroH = this.heroEl.offsetHeight || vh;
-      target = clamp(window.scrollY / (heroH * 0.55), 0, 1);
+      target = this.pinned ? 0 : clamp(window.scrollY / (heroH * 0.55), 0, 1);
     }
     if (this.firstLayout === undefined) this.p = target;
     const k = reduceMotion.matches ? 1 : 1 - Math.exp(-dt * 9);
@@ -362,7 +410,13 @@ export class Mascot {
     let gy = 0;
     this.sleeping = false;
 
-    if (active) {
+    const lk = this.look && t < this.look.until ? this.look : null;
+    if (lk) {
+      const R = Math.max(this.size / 2, 150);
+      gx = Math.tanh((lk.x - this.cx) / (R * 1.1));
+      gy = Math.tanh((lk.y - this.cy) / (R * 1.1));
+      emote = lk.emote;
+    } else if (active) {
       const R = Math.max(this.size / 2, 150);
       const dx = P.x - this.cx;
       const dy = P.y - this.cy;
@@ -394,6 +448,8 @@ export class Mascot {
       gx = this.gaze.x;
       gy = this.gaze.y;
     }
+
+    if (this.holdName) emote = this.holdName;
 
     // chat moods and one-off reactions win over the cursor
     if (this.mood === "thinking") {
