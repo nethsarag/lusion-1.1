@@ -326,7 +326,7 @@ export class Mascot {
     const vw = document.documentElement.clientWidth;
     const vh = window.innerHeight;
     const dockSize = vw < 520 ? 64 : 80;
-    const margin = vw < 520 ? 14 : 20;
+    const margin = vw < 520 ? 16 : 16;
     const dockX = vw - margin - dockSize;
     const dockY = vh - margin - dockSize;
     const docStyle = document.documentElement.style;
