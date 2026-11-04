@@ -1,10 +1,17 @@
 import "../styles/navbar.css";
 
 // Edit these arrays to change the navbar on every page.
-export const NAV_LINKS = [
+const HOME_LINKS = [
+  { label: "Home", href: "#home" },
+  { label: "Pricing", href: "#pricing" },
+  { label: "Features", href: "#features" },
+  { label: "About us", href: "#about" },
+  { label: "Log in", href: "/login.html" },
+];
+const PAGE_LINKS = [
   { label: "Home", href: "/" },
   { label: "Pricing", href: "/pricing.html" },
-  { label: "Resources", href: "/resources.html" },
+  { label: "Features", href: "/resources.html" },
   { label: "About us", href: "/about.html" },
   { label: "Log in", href: "/login.html" },
 ];
@@ -77,7 +84,8 @@ export function mountNavbar() {
   const list = document.createElement("ul");
   list.className = "nav-links";
   list.id = "nav-links";
-  NAV_LINKS.forEach((l) => list.append(makeLink(l)));
+  const links = location.pathname === "/" || location.pathname === "/index.html" ? HOME_LINKS : PAGE_LINKS;
+  links.forEach((l) => list.append(makeLink(l)));
   list.append(makeLink(NAV_CTA, "nav-cta"));
 
   const closeMenu = () => {

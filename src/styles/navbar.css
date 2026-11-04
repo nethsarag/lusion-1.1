@@ -2,10 +2,14 @@
 
 /* Loaded by navbar.js on every page, so it must not restyle the page body. */
 #navbar {
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
   z-index: 5;
-  background: var(--color-bg);
+  padding-top: 82px;
+  pointer-events: none;
+  background: transparent;
   font-family: var(--font-sans);
   color: var(--color-ink);
 }
@@ -18,6 +22,7 @@
   align-items: center;
   justify-content: center;
   gap: var(--space-4);
+  pointer-events: auto;
 }
 
 .nav-brand { display: none; align-items: center; text-decoration: none; } /* desktop shows the pill only, as in the design; phones show the logo */
@@ -29,8 +34,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 32px;
-  width: auto; /* hug the content instead of stretching across the page */
+  gap: clamp(20px, 3vw, 48px);
+  width: min(1074px, calc(100% - 32px));
   list-style: none;
   margin: 0;
   padding: 6px 6px 6px 28px;
@@ -42,7 +47,7 @@
   position: relative;
   display: inline-block;
   padding: 4px 0;
-  font-size: 0.95rem;
+  font-size: clamp(1rem, 2.2vw, 2rem);
   text-decoration: none;
   color: var(--color-ink);
 }
@@ -68,9 +73,18 @@
   transform-origin: left center;
 }
 
+.nav-links a[href^="#"]::after {
+  transform: scaleX(0);
+}
+
+.nav-links a[href="#home"]::after {
+  transform: scaleX(1);
+  transform-origin: left center;
+}
+
 /* Compact CTA so the pill stays slim */
-.nav-links .glass-button { font-size: 0.9rem; line-height: 1.25rem; }
-.nav-links .glass-button-text { padding: 0.5rem 1.1rem; }
+.nav-links .glass-button { font-size: clamp(1rem, 2vw, 1.8rem); line-height: 1.25rem; }
+.nav-links .glass-button-text { padding: 0.6rem 1.1rem; }
 
 /* The CTA is a glass button (see src/glass-button.js); it keeps the brand yellow */
 .nav-links .nav-cta { background-color: var(--color-accent); color: var(--color-accent-ink); }

@@ -17,27 +17,45 @@
     <header id="navbar"></header>
 
     <main>
-      <section class="hero">
-        <h1>
-          <span class="line">All in One <span class="accent">AI</span></span>
-          <span class="line"><span class="accent">Platform</span> for</span>
-          <span class="line">Weight Lifters</span>
-          <span class="line">&amp; Coaches</span>
-        </h1>
+      <section id="home" class="hero">
+        <canvas id="magic-rings" aria-hidden="true"></canvas>
+        <div class="hero-content">
+          <p class="powered-by">
+            Powered with
+            <span class="powered-logo">
+              <img src="/images/logo.svg" alt="" />
+              <strong>Lusion</strong>
+            </span>
+            Artificial Intelligence
+          </p>
+          <h1>
+            <span class="line">All in One Platform for</span>
+            <strong class="line">Weight Lifters &amp; Coaches</strong>
+          </h1>
+          <div id="mascot-anchor" class="mascot-anchor" aria-hidden="true"></div>
+        </div>
+      </section>
 
-        <!-- Hero panel: public/images/hero-panel.png (or .svg, then change the extension here) -->
-        <img
-          class="hero-panel"
-          src="/images/hero-panel.png"
-          width="522"
-          height="391"
-          decoding="async"
-          fetchpriority="high"
-          alt="Lusion AI preview: Train Mode with a progress bar, a coaching message and a chat box"
-        />
+      <section id="features" class="home-section">
+        <p class="section-kicker">Train smarter</p>
+        <h2>Feedback that follows every lift.</h2>
+        <p>Real-time form coaching for lifters and clear progress insights for coaches.</p>
+      </section>
+      <section id="pricing" class="home-section home-section--tint">
+        <p class="section-kicker">Simple plans</p>
+        <h2>Choose the support that fits your training.</h2>
+        <p>Start with the tools you need today and grow with your training.</p>
+      </section>
+      <section id="about" class="home-section">
+        <p class="section-kicker">About Lusion</p>
+        <h2>Built around better movement.</h2>
+        <p>Lusion brings intelligent feedback into the moments that matter most.</p>
       </section>
     </main>
 
     <script type="module" src="/src/nav-init.js"></script>
+    <script type="module" src="/src/magic-rings.js"></script>
+    <script type="module" src="/src/home-init.js"></script>
+    <script type="module" src="/src/mascot-init.js"></script>
   </body>
 </html>
