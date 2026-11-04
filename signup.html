@@ -3,11 +3,40 @@
 <title>Get started | Lusion AI</title><link rel="icon" type="image/x-icon" href="/favicon.ico" />
 <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="/src/styles/base.css" /><link rel="stylesheet" href="/src/styles/pages.css" /></head>
-<body><header id="navbar"></header><main class="page">
-<section class="auth"><h1>Create your account</h1><p class="lede">Join as a lifter or as a coach.</p>
-<form id="auth-form" data-next="signup" novalidate><label for="name">Full name</label><input id="name" name="name" type="text" required autocomplete="name" /><label for="email">Email</label><input id="email" name="email" type="email" required autocomplete="email" /><label for="password">Password (8+ characters)</label><input id="password" name="password" type="password" required autocomplete="new-password" minlength="8" /><label for="role">I am a</label><select id="role" name="role"><option value="lifter">Lifter</option><option value="coach">Coach</option></select>
-<label for="referral">Referral code (optional)</label><input id="referral" name="referral" type="text" autocomplete="off" />
-<p id="form-error" class="error" role="alert"></p><button class="btn btn-primary" type="submit">Create account</button></form>
-<p class="note">Already registered? <a href="/login.html">Log in</a>. Demo build: no server yet.</p></section></main><footer class="foot">Lusion AI is an early MVP. Feedback is guidance, not a replacement for a qualified coach.</footer>
-<script type="module" src="/src/nav-init.js"></script><script type="module" src="/src/auth.js"></script></body></html>
+<link rel="stylesheet" href="/src/styles/base.css" /><link rel="stylesheet" href="/src/styles/pages.css" /><link rel="stylesheet" href="/src/styles/signup.css" /></head>
+<body><header id="navbar"></header>
+<main class="gs-page">
+  <section class="gs-card" aria-labelledby="gs-title">
+    <!-- The mascot stands in this ring (src/signup-init.js puts the live mascot here) -->
+    <div class="gs-badge"><div id="mascot-anchor" class="gs-mascot-slot" aria-hidden="true"></div></div>
+    <h1 id="gs-title">Get Started</h1>
+    <p id="gs-description">Join the Lusion AI community and start your fitness journey today.</p>
+    <form id="auth-form" class="gs-form" data-next="signup" novalidate>
+      <label class="sr" for="email">Email</label>
+      <input id="email" name="email" type="email" placeholder="Enter Your Email" required autocomplete="email" />
+      <label class="sr" for="password">Create your password (8+ characters)</label>
+      <input id="password" name="password" type="password" placeholder="Create Your Password" required autocomplete="new-password" minlength="8" />
+      <label class="sr" for="confirm">Re-enter your password</label>
+      <input id="confirm" name="confirm" type="password" placeholder="Re-Enter Your Password" required autocomplete="new-password" minlength="8" />
+
+      <div class="gs-role-row">
+        <span id="role-label" class="gs-role-label">Select Your Role</span>
+        <div class="gs-role" id="role-picker">
+          <input type="hidden" id="role" name="role" value="lifter" />
+          <button type="button" class="btn btn-primary gs-role-trigger" id="role-trigger" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="role-label role-trigger"><span id="role-current">Athlete</span><i class="gs-caret" aria-hidden="true"></i></button>
+          <div class="gs-role-list" id="role-list" role="listbox" aria-labelledby="role-label" hidden>
+            <button type="button" class="btn gs-option" role="option" data-value="lifter" data-label="Athlete">Athlete</button>
+            <button type="button" class="btn gs-option" role="option" data-value="coach" data-label="Coach">Coach</button>
+          </div>
+        </div>
+      </div>
+
+      <p id="form-error" class="error gs-error" role="alert"></p>
+      <button class="btn btn-primary gs-submit" type="submit">Create account</button>
+      <button class="btn gs-google" type="button" id="google-btn">Continue with Google</button>
+    </form>
+  </section>
+  <p class="note gs-note">Already registered? <a href="/login.html">Log in</a>. Demo build: no server yet.</p>
+</main>
+<footer class="foot">Lusion AI is an early MVP. Feedback is guidance, not a replacement for a qualified coach.</footer>
+<script type="module" src="/src/nav-init.js"></script><script type="module" src="/src/auth.js"></script><script type="module" src="/src/signup-init.js"></script></body></html>
