@@ -2,6 +2,7 @@ import "../styles/navbar.css";
 
 // Edit these arrays to change the navbar on every page.
 export const NAV_LINKS = [
+  { label: "Home", href: "/" },
   { label: "Pricing", href: "/pricing.html" },
   { label: "Resources", href: "/resources.html" },
   { label: "About us", href: "/about.html" },
