@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="/src/styles/base.css" />
     <link rel="stylesheet" href="/src/styles/pages.css" />
     <link rel="stylesheet" href="/src/styles/home.css" />
+    <link rel="stylesheet" href="/src/styles/about.css" />
   </head>
   <body>
     <header id="navbar"></header>
@@ -119,36 +120,27 @@
         </div>
       </section>
 
-      <!-- Temporary sections. They get replaced by About us and the footer. -->
-      <section class="home-section" id="how">
-        <h2>How Lusion coaches your snatch</h2>
-        <p class="lede">Point your webcam at yourself, lift, and get feedback after every rep. Video stays in your browser.</p>
-        <div class="grid3">
-          <article class="card"><h3>Film yourself</h3><p>Stand sideways, whole body in frame, about 2 to 3 m from the camera. A checklist ticks off as each condition is met.</p></article>
-          <article class="card"><h3>Reps found for you</h3><p>A pose model tracks your body and follows each rep through Setup, Pull and Catch &amp; stand.</p></article>
-          <article class="card"><h3>Cues after every rep</h3><p>You get a score from five form checks and up to two short coaching cues you can act on.</p></article>
-        </div>
-        <div class="actions"><a class="btn btn-primary" href="/session.html">Start a session</a></div>
-      </section>
-
-      <section class="home-section" id="ask">
-        <h2>Questions? Ask me.</h2>
-        <p class="lede">That is me in the corner. Tap a question, or click me and type your own.</p>
-        <div class="ask-row">
-          <button type="button" data-ask="How does scoring work?">How does scoring work?</button>
-          <button type="button" data-ask="Filming tips">Filming tips</button>
-          <button type="button" data-ask="Is my video uploaded?">Is my video uploaded?</button>
-          <button type="button" data-ask="What's coming next?">What's coming next?</button>
-        </div>
+      <!-- About us: "Meet Team Tesera" (src/about.js + src/profile-card.js, styles in src/styles/about.css) -->
+      <section class="about" id="about" aria-labelledby="about-title">
+        <header class="about-head">
+          <h2 id="about-title">Meet Team Tesera</h2>
+          <p class="about-sub">Built for Spirit X 2.0 Hackathon</p>
+        </header>
+        <div class="about-grid" id="about-grid"><!-- profile cards are mounted here by src/about.js --></div>
       </section>
     </main>
 
-    <footer class="foot">Lusion AI is an early MVP. Feedback is guidance, not a replacement for a qualified coach.</footer>
+    <footer class="site-foot">
+      <p class="site-foot-copy">All Rights Reserved by Areca Developers | 2026</p>
+      <!-- TODO: replace with your real contact address or page -->
+      <a class="site-foot-contact" href="mailto:contact@example.com">Contact Us</a>
+    </footer>
 
     <script type="module" src="/src/nav-init.js"></script>
     <script type="module" src="/src/hero-init.js"></script>
     <script type="module" src="/src/features.js"></script>
     <script type="module" src="/src/pricing.js"></script>
+    <script type="module" src="/src/about.js"></script>
     <script type="module" src="/src/mascot-init.js"></script>
   </body>
 </html>

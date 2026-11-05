@@ -4,7 +4,7 @@ import "../styles/navbar.css";
 export const NAV_LINKS = [
   { label: "Pricing", href: "/pricing.html" },
   { label: "Resources", href: "/resources.html" },
-  { label: "About us", href: "/about.html" },
+  { label: "About us", href: "/#about" },
   { label: "Log in", href: "/login.html" },
 ];
 export const NAV_CTA = { label: "Get Started", href: "/signup.html" };

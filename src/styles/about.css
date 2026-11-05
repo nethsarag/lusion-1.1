@@ -1,0 +1,86 @@
+/* ---------- About us ("Meet Team Tesera") + footer ----------
+   Built from the 1440 px Figma frame. Card = 387 wide, gap between cards = 56.
+   Heading sizes match "Choose Your Plan" so the sections read as one family. */
+
+.about {
+  position: relative;
+  z-index: 1;
+  background: var(--color-bg);
+  padding: clamp(24px, 3vw, 48px) 0 clamp(56px, 7vw, 110px);
+  text-align: center;
+  overflow-x: clip;
+}
+
+.about-head { padding: 0 var(--space-4); }
+.about-head h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(2.6rem, 5.6vw, 5.4rem);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: var(--track-tight);
+}
+.about-sub {
+  margin: 0 auto;
+  font-size: clamp(1.3rem, 3.15vw, 3.1rem);
+  font-weight: 300;
+  line-height: 1.15;
+  letter-spacing: -0.045em;
+}
+
+/* three cards on one row; wraps to a column on small screens */
+.about-grid {
+  --pf-w: clamp(260px, 26.875vw, 460px);   /* 387 px at 1440 */
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: clamp(28px, 3.9vw, 72px);           /* 56 px at 1440 */
+  margin: clamp(32px, 4.4vw, 72px) auto 0;
+  padding: 0 var(--space-4);
+}
+
+/* Entrance: each card rises and fades in once, one after another (src/about.js adds .is-in) */
+.about.is-armed .pf {
+  opacity: 0;
+  transform: translateY(46px) scale(0.95);
+  transition: opacity 0.8s ease, transform 0.95s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: calc(var(--d, 0) * 150ms);
+}
+.about.is-armed .pf.is-in { opacity: 1; transform: none; }
+
+/* ---------- footer (replaces the old one-line .foot on the home page) ---------- */
+.site-foot {
+  max-width: var(--page-width);
+  margin: 0 auto;
+  padding: clamp(16px, 3vw, 40px) var(--space-4) clamp(32px, 5vw, 64px);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+.site-foot-copy {
+  margin: 0;
+  font-size: clamp(1rem, 1.7vw, 1.55rem);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  color: #7a7a7a;
+}
+.site-foot-contact {
+  display: inline-block;
+  padding: 1px 14px 2px;
+  border: 1px solid #7a7a7a;
+  border-radius: 999px;
+  color: #7a7a7a;
+  font-size: 0.95rem;
+  letter-spacing: -0.02em;
+  text-decoration: none;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+.site-foot-contact:hover { background: var(--color-ink); border-color: var(--color-ink); color: #fff; }
+
+@media (max-width: 720px) {
+  .about-grid { --pf-w: min(86vw, 380px); }
+  /* leave the corner mascot some room so it never covers the footer text */
+  .site-foot { padding-right: 96px; }
+}

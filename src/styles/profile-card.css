@@ -1,0 +1,216 @@
+/* ---------- ProfileCard ----------
+   Built from the 387 x 451 card in the Figma "Meet Team Tesera" frame.
+   Everything inside is sized in cqw (1cqw = 1% of the card width), so the card scales as one piece.
+   Colour tokens (--pc-*) are written onto .pf-card by src/profile-card.js (THEMES / FOILS). */
+
+.pf {
+  position: relative;
+  flex: none;
+  width: var(--pf-w, 387px);
+  container-type: inline-size;
+  text-align: left; /* the About section centres its heading, the card text stays left like the design */
+}
+
+/* Idle float: a slow bob, out of step between the cards (--d is the card number) */
+.pf-float {
+  --pf-amp: clamp(3px, 0.5vw, 8px);
+  animation: pf-float 7s ease-in-out infinite;
+  animation-delay: calc(var(--d, 0) * -2.3s);
+}
+@keyframes pf-float {
+  0%, 100% { transform: translate3d(0, calc(var(--pf-amp) * -0.6), 0); }
+  50%      { transform: translate3d(0, calc(var(--pf-amp) * 0.9), 0); }
+}
+
+/* The card tilts toward the cursor (--pc-rx / --pc-ry come from the spring engine) */
+.pf-card {
+  --pc-rx: 0deg;
+  --pc-ry: 0deg;
+  --pc-lift: 0px;
+  --pc-scale: 1;
+  position: relative;
+  border-radius: 5.8cqw;
+  /* rotation is driven every frame by the spring; lift and scale use their own properties so they can ease */
+  transform: perspective(1000px) rotateX(var(--pc-rx)) rotateY(var(--pc-ry));
+  translate: 0 var(--pc-lift);
+  scale: var(--pc-scale);
+  transition: translate 0.5s cubic-bezier(0.22, 1, 0.36, 1), scale 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+  color: var(--pc-ink);
+  box-shadow: var(--pc-frame-shadow);
+  -webkit-tap-highlight-color: transparent;
+}
+.pf-card.is-active { --pc-lift: -1.2cqw; --pc-scale: 1.02; }
+.pf-card.is-pressed { --pc-scale: 0.985; }
+
+.pf-frame {
+  position: relative;
+  padding: 3.9cqw 3.9cqw 0;
+  border-radius: inherit;
+  background: var(--pc-frame);
+  box-shadow: inset 0 0 0 1px var(--pc-frame-edge);
+}
+
+/* ----- photo tile ----- */
+.pf-tile {
+  position: relative;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: 5.2cqw;
+  background: #8ec3ee;
+  isolation: isolate;
+}
+.pf-avatar {
+  position: absolute;
+  inset: -3%; /* a little bleed so the parallax slide never shows an edge */
+  width: 106%;
+  height: 106%;
+  object-fit: cover;
+  object-position: 50% 20%;
+  transform: translate3d(var(--pc-par-x, 0px), var(--pc-par-y, 0px), 0);
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* Rainbow foil. Only visible while the card is being tilted. */
+.pf-holo {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  mix-blend-mode: var(--pc-blend);
+  filter: var(--pc-holo-filter);
+  background:
+    repeating-linear-gradient(115deg,
+      hsl(0 90% 70%) 0%, hsl(60 90% 70%) 12%, hsl(130 90% 70%) 24%,
+      hsl(200 90% 70%) 36%, hsl(280 90% 70%) 48%, hsl(0 90% 70%) 60%);
+  background-size: 260% 260%;
+  background-position: var(--pc-pointer-x, 50%) var(--pc-pointer-y, 50%);
+  opacity: calc(var(--pc-tilt, 0) * var(--pc-holo-amt, 0.8) * 0.22);
+}
+
+/* Light that follows the cursor */
+.pf-glare {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: radial-gradient(circle at var(--pc-light-x, 50%) var(--pc-light-y, 0%), rgba(255, 255, 255, 0.55), transparent 55%);
+  opacity: calc(var(--pc-tilt, 0) * var(--pc-glare-amt, 0.5) * 1.4);
+}
+
+.pf-grain {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background-image: var(--pc-grain);
+  background-size: 160px;
+  mix-blend-mode: soft-light;
+  opacity: 0.35;
+}
+
+/* Dark fade at the bottom so the name stays readable on any photo */
+.pf-shade {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 42%;
+  z-index: 3;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.62) 62%, rgba(0, 0, 0, 0.94) 100%);
+}
+
+.pf-id {
+  position: absolute;
+  left: 5.4cqw;
+  right: 5.4cqw;
+  bottom: 4cqw;
+  z-index: 4;
+  color: #fff;
+  /* the name floats a touch above the photo for depth */
+  transform: translate3d(calc(var(--pc-par-x, 0px) * -0.5), calc(var(--pc-par-y, 0px) * -0.5), 0);
+}
+.pf-name {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 5.2cqw;
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.045em;
+}
+.pf-title {
+  margin: 0.4cqw 0 0;
+  font-size: 3.1cqw;
+  font-weight: 400;
+  line-height: 1.3;
+  letter-spacing: -0.03em;
+  opacity: 0.82;
+}
+
+/* ----- footer row: handle + GitHub on the left, status on the right ----- */
+.pf-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 2.4cqw 1.5cqw 4.2cqw 5.1cqw;
+}
+.pf-left { display: flex; flex-direction: column; align-items: flex-start; gap: 1.5cqw; min-width: 0; }
+.pf-handle {
+  font-family: var(--font-display);
+  font-size: 5.2cqw;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.045em;
+  white-space: nowrap;
+}
+
+/* GitHub pill: black, white logo + label, sized together so the logo always fits */
+.pf-gh {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.1cqw;
+  height: 5.6cqw;
+  padding: 0 2.6cqw 0 1.9cqw;
+  margin-left: 0.4cqw;
+  border-radius: 999px;
+  background: #000;
+  color: #fff;
+  font-size: 3.1cqw;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), filter 0.2s ease;
+}
+.pf-gh-logo { display: block; width: 3.5cqw; height: 3.5cqw; flex: none; }
+.pf-gh:hover { transform: translateY(-1px) scale(1.06); filter: var(--pc-hover); }
+.pf-gh:active { transform: scale(0.96); filter: var(--pc-press); }
+.pf-gh:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+
+.pf-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.5cqw;
+  margin-top: 1.7cqw;
+  font-size: 3.1cqw;
+  color: var(--pc-muted);
+  letter-spacing: -0.01em;
+}
+.pf-dot {
+  width: 2.6cqw;
+  height: 2.6cqw;
+  border-radius: 50%;
+  animation: pf-pulse 2.4s ease-out infinite;
+}
+@keyframes pf-pulse {
+  0%   { box-shadow: 0 0 0 0 color-mix(in srgb, var(--pf-dot, #00e639) 55%, transparent); }
+  70%  { box-shadow: 0 0 0 1.8cqw transparent; }
+  100% { box-shadow: 0 0 0 0 transparent; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pf-float, .pf-dot { animation: none; }
+  .pf-card { transform: none; }
+  .pf-holo, .pf-glare { display: none; }
+}
