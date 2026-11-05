@@ -22,6 +22,19 @@ export const MUSTACHE = {
   cy: 612,
 };
 
+// Star eyes (shown while the Pro plan card is hovered, see src/pricing.js).
+// A 5-point star centred on 0,0. mascot.js moves it onto each eye, spins it and scales it in.
+export const STAR = { R: 112, r: 50, points: 5 };
+const STAR_D = (() => {
+  let d = "";
+  for (let i = 0; i < STAR.points * 2; i++) {
+    const rad = i % 2 ? STAR.r : STAR.R;
+    const a = -Math.PI / 2 + (i * Math.PI) / STAR.points;
+    d += `${i ? "L" : "M"}${(Math.cos(a) * rad).toFixed(2)} ${(Math.sin(a) * rad).toFixed(2)}`;
+  }
+  return d + "Z";
+})();
+
 let uid = 0;
 
 export function mascotSVG() {
@@ -45,6 +58,8 @@ export function mascotSVG() {
     <g data-part="features" filter="url(#${id}-glow)" fill="#ffda00">
       <rect data-part="eyeL"/>
       <rect data-part="eyeR"/>
+      <path data-part="starL" d="${STAR_D}" stroke="#ffda00" stroke-width="18" stroke-linejoin="round" opacity="0" transform="scale(0)"/>
+      <path data-part="starR" d="${STAR_D}" stroke="#ffda00" stroke-width="18" stroke-linejoin="round" opacity="0" transform="scale(0)"/>
       <g data-part="mustache"><path transform="translate(${MUSTACHE.shift} ${MUSTACHE.shift})" d="${MUSTACHE.d}"/></g>
     </g>
   </g>

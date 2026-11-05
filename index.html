@@ -63,7 +63,63 @@
         </div>
       </section>
 
-      <!-- Temporary sections. They get replaced by Pricing, About us and the footer. -->
+      <!-- Pricing: "Choose Your Plan" (src/pricing.js + src/styles/pricing.css) -->
+      <section class="pricing" id="pricing" aria-labelledby="pricing-title">
+        <header class="pricing-head">
+          <h2 id="pricing-title">Choose Your Plan</h2>
+          <p class="pricing-sub">Upgrade with Pro</p>
+        </header>
+
+        <div class="pc-grid">
+          <!-- FREE -->
+          <article class="pc pc--free" style="--d: 0" aria-labelledby="pc-free-name">
+            <div class="pc-float">
+              <div class="pc-card">
+                <div class="pc-face" aria-hidden="true"></div>
+                <div class="pc-inner">
+                  <div class="pc-top">
+                    <h3 class="pc-name" id="pc-free-name">Free</h3>
+                    <span class="pc-badge">Active</span>
+                  </div>
+                  <p class="pc-price"><span class="pc-amt">$0</span><span class="pc-per">/month</span></p>
+                  <ul class="pc-list">
+                    <li><svg class="pc-ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10.5"/><path d="M7 12h9m-3.5-4 4 4-4 4"/></svg><span>Limited Experience</span></li>
+                    <li><svg class="pc-ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10.5"/><path d="M7 12h9m-3.5-4 4 4-4 4"/></svg><span>Limited Access to Lusion AI</span></li>
+                  </ul>
+                  <div class="pc-actions">
+                    <button type="button" class="btn pc-btn-silver" aria-disabled="true">Current Plan</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- PRO (gold animated stroke; hovering it makes the corner mascot's eyes spin as stars) -->
+          <article class="pc pc--pro" style="--d: 1" aria-labelledby="pc-pro-name">
+            <div class="pc-float">
+              <div class="pc-card">
+                <div class="pc-face" aria-hidden="true"></div>
+                <div class="pc-inner">
+                  <div class="pc-top">
+                    <h3 class="pc-name" id="pc-pro-name">Pro</h3>
+                  </div>
+                  <p class="pc-price"><span class="pc-amt">$10</span><span class="pc-per">/month</span></p>
+                  <ul class="pc-list">
+                    <li><svg class="pc-ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10.5"/><path d="M7 12h9m-3.5-4 4 4-4 4"/></svg><span>Access to 100% Pro Features</span></li>
+                    <li><svg class="pc-ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10.5"/><path d="M7 12h9m-3.5-4 4 4-4 4"/></svg><span>Unlimited Lusion AI Experience</span></li>
+                    <li><svg class="pc-ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10.5"/><path d="M7 12h9m-3.5-4 4 4-4 4"/></svg><span>Unlimited Lusion AI Experience</span></li>
+                  </ul>
+                  <div class="pc-actions">
+                    <a class="btn btn-primary" href="/signup.html">Upgrade Plan</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- Temporary sections. They get replaced by About us and the footer. -->
       <section class="home-section" id="how">
         <h2>How Lusion coaches your snatch</h2>
         <p class="lede">Point your webcam at yourself, lift, and get feedback after every rep. Video stays in your browser.</p>
@@ -92,6 +148,7 @@
     <script type="module" src="/src/nav-init.js"></script>
     <script type="module" src="/src/hero-init.js"></script>
     <script type="module" src="/src/features.js"></script>
+    <script type="module" src="/src/pricing.js"></script>
     <script type="module" src="/src/mascot-init.js"></script>
   </body>
 </html>

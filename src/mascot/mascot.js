@@ -89,6 +89,7 @@ export class Mascot {
     this.onActivate = null; // called when the docked mascot is clicked
     this.onModeChange = null;
     this.chatOpen = false;
+    this.starOn = false; // star eyes (Pro plan card hover). See setStars()
 
     this.ptr = { x: 0, y: 0, t: 0, lastMove: performance.now() / 1000, speed: 0, seen: false };
     this.over = null; // {name, until} one-off reactions (boop, flick)
@@ -139,7 +140,7 @@ export class Mascot {
     this.bubble = root.querySelector(".mascot-bubble");
     this.shadow = root.querySelector(".mascot-shadow");
     const q = (s) => root.querySelector(`[data-part="${s}"]`);
-    this.parts = { face: q("face"), features: q("features"), L: q("eyeL"), R: q("eyeR"), mus: q("mustache") };
+    this.parts = { face: q("face"), features: q("features"), L: q("eyeL"), R: q("eyeR"), mus: q("mustache"), starL: q("starL"), starR: q("starR") };
     this.updateLabel();
   }
 
@@ -180,6 +181,7 @@ export class Mascot {
     add("sacx", 260, 0.9);
     add("sacy", 260, 0.9);
     add("tilt", 90, 0.7); // lean while flying between hero and corner
+    add("star", 230, 0.42); // 0 = normal eyes, 1 = spinning star eyes (springy pop in)
     this.sp = sp;
   }
 
@@ -225,6 +227,8 @@ export class Mascot {
       },
       { passive: true }
     );
+    // Star eyes: any script can switch them with  window.dispatchEvent(new CustomEvent("lusion:star-eyes", { detail: { on: true } }))
+    window.addEventListener("lusion:star-eyes", (e) => this.setStars(!!(e.detail && e.detail.on)));
     document.documentElement.addEventListener("pointerleave", () => (P.lastMove = -99));
     window.addEventListener("blur", () => (P.lastMove = -99));
 
@@ -252,6 +256,13 @@ export class Mascot {
   /** Show an emote for a short time, above everything the cursor is doing. */
   reactNow(name, seconds) {
     this.over = { name, until: performance.now() / 1000 + seconds };
+  }
+
+  /** Turn the spinning star eyes on or off (used by the Pro plan card). */
+  setStars(on) {
+    this.starOn = on;
+    this.sp.star.t = on ? 1 : 0;
+    if (on) this.poke(); // wakes the mascot if it was sleeping
   }
 
   /** Used by the chat: "thinking" | "talking" | null */
@@ -461,6 +472,7 @@ export class Mascot {
     } else if (this.react_ && t < this.react_.until) {
       emote = this.react_.name;
     }
+    if (this.starOn && !this.mood) emote = "happy"; // star eyes come with a happy moustache
     if (this.over && t < this.over.until) emote = this.over.name;
 
     this.setEmote(emote);
@@ -531,6 +543,7 @@ export class Mascot {
       const x = E.x - ww / 2;
       const rx = Math.min(h / 2, clamp(35.65 + (h - 107.46) * 0.1411, 6, 56));
       const el = this.parts[s];
+      el.setAttribute("opacity", (1 - clamp(sp.star.x * 1.6, 0, 1)).toFixed(3)); // normal eye fades out as the star pops in
       el.setAttribute("x", x.toFixed(2));
       el.setAttribute("y", top.toFixed(2));
       el.setAttribute("width", w.toFixed(2));
@@ -543,6 +556,24 @@ export class Mascot {
         "transform",
         `translate(${ex.toFixed(2)} ${ey.toFixed(2)}) rotate(${sp[`${s}.rot`].x.toFixed(2)} ${(x + w / 2).toFixed(2)} ${(top + h / 2).toFixed(2)})`
       );
+    }
+
+    // star eyes: sit on the neutral eye centres, follow the gaze like the eyes do, spin and pulse
+    const sv = sp.star.x;
+    for (const s of ["L", "R"]) {
+      const star = this.parts[`star${s}`];
+      if (!star) continue;
+      if (sv < 0.002 && !this.starOn) {
+        if (star.getAttribute("opacity") !== "0") star.setAttribute("opacity", "0");
+        continue;
+      }
+      const E = EYES[s];
+      const sx = E.x + E.w / 2 + lx * 14 + sp.sacx.x;
+      const sy = E.y + E.h / 2 + ly * 11 + sp.sacy.x;
+      const spin = ((t * 150 * m) % 360) * (s === "L" ? 1 : -1); // eyes spin in opposite directions
+      const scale = Math.max(0, sv) * (1 + 0.07 * Math.sin(t * 6) * m);
+      star.setAttribute("opacity", clamp(sv * 1.4, 0, 1).toFixed(3));
+      star.setAttribute("transform", `translate(${sx.toFixed(2)} ${sy.toFixed(2)}) rotate(${spin.toFixed(2)}) scale(${scale.toFixed(4)})`);
     }
 
     // moustache: sways, wiggles when happy, bounces when "talking"

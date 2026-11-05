@@ -1,0 +1,292 @@
+/* ---------- Pricing ("Choose Your Plan") ----------
+   Built from the 1440 px Figma frame. Card = 417 x 515, gap between cards = 117.
+   Everything inside a card is sized in cqw (1cqw = 1% of the card width), so the
+   card scales as one piece. Card width and gap follow the screen (see .pc-grid). */
+
+/* The gold stroke angle. Registered so the browser can animate it. */
+@property --pc-angle { syntax: "<angle>"; inherits: true; initial-value: 0deg; }
+
+.pricing {
+  --pc-gold: #ffd900;
+  position: relative;
+  z-index: 1;
+  background: var(--color-bg);
+  padding: clamp(24px, 3vw, 48px) 0 clamp(72px, 9vw, 140px);
+  text-align: center;
+  overflow-x: clip;
+}
+
+/* ----- heading (same scale as "Top Features") ----- */
+.pricing-head { padding: 0 var(--space-4); }
+.pricing-head h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(2.6rem, 5.6vw, 5.4rem);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: var(--track-tight);
+}
+.pricing-sub {
+  margin: 0 auto;
+  font-size: clamp(1.3rem, 3.15vw, 3.1rem);
+  font-weight: 300;
+  line-height: 1.15;
+  letter-spacing: -0.045em;
+}
+
+/* ----- the two cards ----- */
+.pc-grid {
+  --pc-w: clamp(280px, 28.96vw, 500px);   /* 417 px at 1440 */
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: clamp(24px, 8.1vw, 140px);          /* 117 px at 1440 */
+  margin: clamp(36px, 5.7vw, 96px) auto 0;
+  padding: 0 var(--space-4);
+}
+
+.pc {
+  position: relative;
+  flex: none;
+  width: var(--pc-w);
+  container-type: inline-size; /* lets everything inside size itself with cqw */
+}
+
+/* Entrance: each card rises and fades in once, Pro a beat after Free (src/pricing.js adds .is-in) */
+.pricing.is-armed .pc {
+  opacity: 0;
+  transform: translateY(46px) scale(0.95);
+  transition: opacity 0.8s ease, transform 0.95s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: calc(var(--d, 0) * 150ms);
+}
+.pricing.is-armed .pc.is-in { opacity: 1; transform: none; }
+
+/* Idle float: a slow bob, out of step between the two cards (same idea as the features carousel) */
+.pc-float {
+  --pc-amp: clamp(3px, 0.6vw, 9px);
+  animation: pc-float 7s ease-in-out infinite;
+  animation-delay: calc(var(--d, 0) * -2.4s);
+}
+@keyframes pc-float {
+  0%, 100% { transform: translate3d(0, calc(var(--pc-amp) * -0.6), 0); }
+  50%      { transform: translate3d(0, calc(var(--pc-amp) * 0.9), 0); }
+}
+
+/* The card itself: tilts toward the cursor and lifts on hover (--rx / --ry / --mx / --my come from src/pricing.js) */
+.pc-card {
+  position: relative;
+  aspect-ratio: 417 / 515;
+  border-radius: 7.2cqw;
+  transform: perspective(1100px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateY(var(--lift, 0px)) scale(var(--sc, 1));
+  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+.pc-card.is-tracking { transition: transform 0.14s ease-out; } /* quick follow while the cursor moves */
+
+/* Dark face: grey at the top fading to black, with a light rim */
+.pc-face {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+  overflow: hidden;
+  background: linear-gradient(180deg, #454545 0%, #292929 36%, #0f0f0f 76%, #000 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.24),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.08),
+    0 3cqw 6cqw -2cqw rgba(0, 0, 0, 0.5);
+}
+/* Soft light that follows the cursor */
+.pc-face::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at var(--mx, 50%) var(--my, 0%), rgba(255, 255, 255, 0.17), transparent 55%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+@media (hover: hover) {
+  .pc:hover .pc-card { --lift: -1.9cqw; --sc: 1.025; }
+  .pc:hover .pc-face::after { opacity: 1; }
+  .pc:hover .pc-float { animation-play-state: paused; }
+}
+
+/* ----- card content ----- */
+.pc-inner {
+  position: relative;
+  z-index: 3;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 6cqw 6cqw 10cqw 6.4cqw;
+  color: #fff;
+  text-align: left;
+}
+
+.pc-top { display: flex; align-items: flex-start; justify-content: space-between; }
+.pc-name {
+  margin: 0;
+  font-size: 10.6cqw;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.05em;
+}
+.pc-badge {
+  display: grid;
+  place-items: center;
+  width: 26.9cqw;
+  height: 7.4cqw;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #ececec, #b9b9b9);
+  color: #111;
+  font-size: 4.6cqw;
+  font-weight: 500;
+  letter-spacing: -0.04em;
+}
+
+.pc-price {
+  margin: 1cqw 0 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 1.6cqw;
+}
+.pc-amt {
+  font-size: 24cqw;
+  font-weight: 700;
+  line-height: 0.95;
+  letter-spacing: -0.045em;
+  background: linear-gradient(180deg, #ffffff 8%, #8d8d8d 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+.pc-per {
+  margin-top: 4.4cqw;
+  font-size: 4.8cqw;
+  font-weight: 300;
+  letter-spacing: -0.02em;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.pc-list {
+  list-style: none;
+  margin: 0;
+  padding: 0 4.2cqw;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Free (2 rows) and Pro (3 rows) both centre between price and button */
+  gap: 5.4cqw;
+}
+.pc-list li {
+  display: flex;
+  align-items: center;
+  gap: 5cqw;
+  padding-bottom: 2.2cqw;
+  border-bottom: max(1.5px, 0.5cqw) solid rgba(255, 255, 255, 0.42);
+  font-size: 4.8cqw;
+  font-weight: 300;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+}
+.pc-ic {
+  flex: none;
+  width: 4.8cqw;
+  height: 4.8cqw;
+  fill: none;
+  stroke: var(--pc-gold);
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* ----- buttons: the site's glass button (src/glass-button.js wraps them), sized to the card ----- */
+.pc-actions { display: flex; justify-content: center; }
+.pc-actions .glass-button-wrap { font-size: 4.8cqw; }
+.pc-actions .glass-button { font-size: inherit; line-height: 1; font-weight: 600; }
+.pc-actions .glass-button-text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 45.3cqw;
+  height: 9.4cqw;
+  padding: 0;
+  letter-spacing: -0.04em;
+}
+.pc--pro .pc-actions .glass-button.btn-primary { background-color: var(--pc-gold); }
+/* "Current Plan": silver under the glass, and not clickable */
+.pc .pc-actions .glass-button.pc-btn-silver {
+  background:
+    linear-gradient(-75deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.05)),
+    linear-gradient(180deg, #e7e7e7 0%, #a4a4a4 100%);
+  cursor: default;
+}
+.pc--free .glass-button-wrap { cursor: default; }
+
+/* ----- PRO: animated gold shiny stroke -----
+   Three layers: a blurred glow behind the card (::after), the dark face, and a thin
+   gold ring on top (::before). A bright spot runs around the ring: --pc-angle turns
+   from 0 to 360 deg forever. */
+.pc--pro .pc-card {
+  --pc-stroke: clamp(2px, 0.75cqw, 4px);
+  --pc-glow: 0.42;
+  animation: pc-orbit 5.5s linear infinite;
+}
+.pc--pro:hover .pc-card { --pc-glow: 0.9; }
+@keyframes pc-orbit { to { --pc-angle: 360deg; } }
+
+.pc--pro .pc-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border-radius: inherit;
+  padding: var(--pc-stroke);
+  pointer-events: none;
+  background: conic-gradient(
+    from var(--pc-angle),
+    rgba(255, 217, 0, 0.14) 0deg,
+    rgba(184, 134, 11, 0.6) 80deg,
+    #ffd900 150deg,
+    #fff7cc 186deg,
+    #ffd900 222deg,
+    rgba(184, 134, 11, 0.6) 290deg,
+    rgba(255, 217, 0, 0.14) 360deg
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+}
+.pc--pro .pc-card::after {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  z-index: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: conic-gradient(
+    from var(--pc-angle),
+    transparent 0deg,
+    transparent 110deg,
+    rgba(255, 217, 0, 0.95) 190deg,
+    transparent 262deg,
+    transparent 360deg
+  );
+  filter: blur(clamp(8px, 2.6cqw, 16px));
+  opacity: var(--pc-glow);
+  transition: opacity 0.5s ease;
+}
+
+/* ----- phones and small tablets: cards stack ----- */
+@media (max-width: 860px) {
+  .pc-grid { flex-direction: column; align-items: center; gap: 34px; }
+  .pc { width: min(86vw, 420px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pc-float, .pc--pro .pc-card { animation: none; }
+  .pricing.is-armed .pc, .pc-card, .pc-face::after { transition: none; }
+}
