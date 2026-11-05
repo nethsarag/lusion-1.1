@@ -6,13 +6,15 @@
   --color-line: #e8e8e8;
   --color-accent: #ffd633;
   --color-accent-ink: #0b0b0b;
-  --color-nav-pill: #f7f7f7;
+  --color-nav-pill: #f6f6f6;
 
   /* SF Pro renders on Apple devices; Inter is the close fallback elsewhere. */
   --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text",
     "Inter", "Segoe UI", system-ui, sans-serif;
   /* Heading font. Replace with the display font used in the Figma heading. */
   --font-display: var(--font-sans);
+  /* Tight tracking is what gives the SF Pro Display headline look */
+  --track-tight: -0.055em;
 
   --space-1: 4px;
   --space-2: 8px;
@@ -25,5 +27,12 @@
   --radius-m: 14px;
 
   --page-width: 1200px;
-  --underline-width: 100%;
+  --underline-width: 60%;
+
+  /* Height of the fixed navbar. Pages reserve this space at the top. */
+  --nav-h: 104px;
+}
+
+@media (max-width: 720px) {
+  :root { --nav-h: 80px; }
 }

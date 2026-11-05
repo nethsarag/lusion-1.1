@@ -1,53 +1,85 @@
 @import "./tokens.css";
 
-/* Loaded by navbar.js on every page, so it must not restyle the page body. */
+/* Loaded by navbar.js on every page, so it must not restyle the page body.
+   The bar is fixed: it stays put while the page scrolls underneath it. */
 #navbar {
-  position: sticky;
+  position: fixed;
   top: 0;
-  z-index: 5;
-  background: var(--color-bg);
+  left: 0;
+  right: 0;
+  z-index: 50;
+  pointer-events: none; /* only the pill itself takes clicks, the rest passes through */
   font-family: var(--font-sans);
   color: var(--color-ink);
 }
 
+/* Blur-out strip: whatever scrolls up behind the navbar fades into a soft blur.
+   It stays invisible at the very top so the hero background is untouched. */
+#navbar::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: calc(var(--nav-h) + 40px);
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0));
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 55%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 0, #000 55%, transparent 100%);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+#navbar.is-scrolled::before { opacity: 1; }
+
 .nav-inner {
   max-width: 1120px;
   margin: 0 auto;
-  padding: 12px var(--space-4);
+  padding: 20px var(--space-4) 0;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: var(--space-4);
 }
 
-.nav-brand { display: none; align-items: center; text-decoration: none; } /* desktop shows the pill only, as in the design; phones show the logo */
-.nav-logo { display: block; height: 32px; width: auto; }
-.nav-wordmark { font-size: 1.4rem; font-weight: 800; letter-spacing: -0.02em; color: var(--color-ink); }
+/* The logo only shows on small screens, where the pill collapses into a menu */
+.nav-brand { display: none; align-items: center; text-decoration: none; pointer-events: auto; }
+.nav-wordmark { font-size: 1.35rem; color: var(--color-ink); }
+.nav-wordmark .wm-o { width: 0.82em; height: 0.82em; margin: 0 0.03em; vertical-align: -0.06em; }
 
-/* The gray pill from the design: centred, links spread across it, CTA on the right */
+/* The gray pill from the design */
 .nav-links {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 32px;
-  width: auto; /* hug the content instead of stretching across the page */
+  gap: 12px;
+  width: 100%;
   list-style: none;
   margin: 0;
-  padding: 6px 6px 6px 28px;
+  padding: 10px 12px 10px clamp(20px, 3.2vw, 44px);
   background: var(--color-nav-pill);
-  border-radius: 999px;
+  border-radius: 9999px;
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+  transition: box-shadow 0.35s ease;
+  pointer-events: auto;
 }
+#navbar.is-scrolled .nav-links { box-shadow: 0 10px 30px rgba(0, 0, 0, 0.07); }
 
 .nav-links a:not(.glass-button) {
   position: relative;
   display: inline-block;
-  padding: 4px 0;
-  font-size: 0.95rem;
+  padding: 6px 0;
+  font-size: clamp(1rem, 1.25vw, 1.2rem);
+  font-weight: 400;
+  letter-spacing: -0.01em;
   text-decoration: none;
   color: var(--color-ink);
 }
 
-/* Yellow underline: slides in from the left on hover, slides out to the right on leave */
+/* Yellow underline: slides in from the left on hover, slides out to the right on leave.
+   The link of the section you are on keeps it showing. */
 .nav-links a:not(.nav-cta)::after {
   content: "";
   position: absolute;
@@ -63,17 +95,20 @@
 }
 .nav-links a:not(.nav-cta):hover::after,
 .nav-links a:not(.nav-cta):focus-visible::after,
-.nav-links a[aria-current="page"]:not(.nav-cta)::after { /* the page you are on keeps its underline */
+.nav-links a:not(.nav-cta)[aria-current]::after {
   transform: scaleX(1);
   transform-origin: left center;
 }
 
-/* Compact CTA so the pill stays slim */
-.nav-links .glass-button { font-size: 0.9rem; line-height: 1.25rem; }
-.nav-links .glass-button-text { padding: 0.5rem 1.1rem; }
-
 /* The CTA is a glass button (see src/glass-button.js); it keeps the brand yellow */
 .nav-links .nav-cta { background-color: var(--color-accent); color: var(--color-accent-ink); }
+
+/* Slightly larger CTA to match the design */
+.nav-links .nav-cta .glass-button-text {
+  padding: 0.6rem 1.4rem;
+  font-size: clamp(1rem, 1.25vw, 1.2rem);
+  letter-spacing: -0.03em;
+}
 
 .glass-button-wrap:has(> .nav-toggle) { display: none; }
 .nav-toggle:not(.glass-button) {
@@ -88,34 +123,43 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .nav-links a:not(.nav-cta)::after { transition: none; }
+  .nav-links a:not(.nav-cta)::after,
+  #navbar::before,
+  .nav-links { transition: none; }
 }
 
 @media (max-width: 720px) {
-  .nav-inner { padding: 14px var(--space-3); }
-  .nav-inner { justify-content: space-between; }
+  .nav-inner {
+    margin: 10px 12px 0;
+    padding: 8px 10px 8px 18px;
+    max-width: none;
+    justify-content: space-between;
+    background: var(--color-nav-pill);
+    border-radius: 9999px;
+    pointer-events: auto;
+  }
   .nav-brand { display: inline-flex; }
-  .nav-links { justify-content: flex-start; }
   .nav-toggle:not(.glass-button) { display: inline-block; }
   .glass-button-wrap:has(> .nav-toggle) { display: inline-block; }
   .nav-links {
     display: none;
     position: absolute;
     top: 100%;
-    left: var(--space-3);
-    right: var(--space-3);
+    left: 12px;
+    right: 12px;
+    margin-top: 8px;
     flex-direction: column;
     align-items: stretch;
+    justify-content: flex-start;
     gap: 0;
     width: auto;
-    border-radius: var(--radius-m);
-    padding: var(--space-2) var(--space-3) var(--space-3);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    padding: var(--space-2) var(--space-4) var(--space-3);
+    border-radius: 24px;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
   }
   #navbar.open .nav-links { display: flex; }
-  .nav-links a:not(.glass-button) { display: block; padding: 12px 0; }
+  .nav-links a:not(.glass-button) { display: block; padding: 12px 0; font-size: 1.1rem; }
   .nav-links a:not(.nav-cta)::after { bottom: 6px; }
   .nav-links .glass-button-wrap { display: block; margin-top: var(--space-2); }
   .nav-links .glass-button { display: block; width: 100%; text-align: center; }
-  .nav-links .glass-button-text { padding: 0.75rem 1.25rem; }
 }
