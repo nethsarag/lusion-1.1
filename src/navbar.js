@@ -141,5 +141,4 @@ export function mountNavbar() {
 
   inner.append(brand, toggle, list);
   header.replaceChildren(inner);
-  watchScroll(header);
 }
