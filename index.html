@@ -40,7 +40,30 @@
         </div>
       </section>
 
-      <!-- Temporary sections. They get replaced by Features, Pricing, About us and the footer. -->
+      <!-- Top Features: carousel (src/features.js, content in src/features-data.js) -->
+      <section class="features" id="features" aria-labelledby="features-title">
+        <header class="features-head">
+          <h2 id="features-title">Top Features</h2>
+          <p class="features-sub">Curated with Olympic Weightlifting Standards</p>
+        </header>
+
+        <div class="fc" id="fc" tabindex="0" role="region" aria-roledescription="carousel" aria-label="Top features">
+          <div class="fc-track" id="fc-track"></div>
+        </div>
+
+        <div class="fc-caption" id="fc-caption" aria-live="polite">
+          <!-- Same glass layers that src/glass-button.js builds, written out so the title is not a button -->
+          <div class="glass-button-wrap fc-title-wrap">
+            <div class="glass-button btn-primary fc-title" id="fc-title">
+              <span class="glass-button-text"><span class="fc-title-text" id="fc-title-text">Realtime AI Feedbacks</span></span>
+            </div>
+            <div class="glass-button-shadow" aria-hidden="true"></div>
+          </div>
+          <p class="fc-desc" id="fc-desc">Lusion Artificial Intelligence Tracking with Pose Landmarker</p>
+        </div>
+      </section>
+
+      <!-- Temporary sections. They get replaced by Pricing, About us and the footer. -->
       <section class="home-section" id="how">
         <h2>How Lusion coaches your snatch</h2>
         <p class="lede">Point your webcam at yourself, lift, and get feedback after every rep. Video stays in your browser.</p>
@@ -68,6 +91,7 @@
 
     <script type="module" src="/src/nav-init.js"></script>
     <script type="module" src="/src/hero-init.js"></script>
+    <script type="module" src="/src/features.js"></script>
     <script type="module" src="/src/mascot-init.js"></script>
   </body>
 </html>

@@ -1,0 +1,192 @@
+/* ---------- Features ("Top Features" carousel) ----------
+   Built from the 1440 px Figma frame. Sizes use vw / cqw so everything
+   scales with the screen. Carousel card sizes live in src/features.js. */
+
+.features {
+  --fc-yellow: #ffd900;
+  --fc-title-radius: clamp(14px, 1.5vw, 22px);
+  position: relative;
+  z-index: 1;
+  background: var(--color-bg);
+  padding: clamp(56px, 8.4vw, 124px) 0 clamp(56px, 7vw, 104px);
+  text-align: center;
+  overflow-x: clip;
+}
+
+/* ----- heading ----- */
+.features-head { padding: 0 var(--space-4); }
+.features-head h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(2.6rem, 5.6vw, 5.4rem);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: var(--track-tight);
+}
+.features-sub {
+  margin: 0 auto;
+  max-width: 11.4em;
+  font-size: clamp(1.3rem, 3.15vw, 3.1rem);
+  font-weight: 300;
+  line-height: 1.15;
+  letter-spacing: -0.045em;
+  text-wrap: balance;
+}
+
+/* ----- carousel stage ----- */
+.fc {
+  position: relative;
+  container-type: inline-size; /* lets children size text with cqw */
+  width: 100%;
+  max-width: 1680px;
+  margin: clamp(22px, 2.5vw, 38px) auto 0;
+  aspect-ratio: 1440 / 458;   /* = height of the centre card */
+  touch-action: pan-y;         /* vertical scroll stays native, horizontal is ours */
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.fc.fc--mobile { aspect-ratio: 2.114 / 1; }
+.fc.is-dragging { cursor: grabbing; }
+.fc:focus-visible { outline-offset: 8px; border-radius: 24px; }
+
+.fc-track { position: absolute; inset: 0; }
+
+.fc-card {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 0;
+  height: 0;
+  will-change: transform, width, height, opacity;
+  /* size, position, z-index and --r (radius) are set by src/features.js */
+}
+
+/* Floating: each card bobs gently, out of step with its neighbours.
+   It lives on an inner layer so it never fights the position set by JS. */
+.fc-card-float {
+  --fc-amp: clamp(4px, 0.85cqw, 13px);
+  position: absolute;
+  inset: 0;
+  animation: fc-float 6.5s ease-in-out infinite;
+  animation-delay: calc(var(--i, 0) * -1.15s);
+}
+@keyframes fc-float {
+  0%, 100% { transform: translate3d(0, calc(var(--fc-amp) * -0.6), 0); }
+  50%      { transform: translate3d(0, calc(var(--fc-amp) * 0.9), 0); }
+}
+
+.fc-media {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: var(--r, 24px);
+  background: #ccc;
+  /* soft shadow that only the centre card really gets (--c is 1 in the centre, 0 at the sides) */
+  box-shadow: 0 2cqw 4.2cqw -1.6cqw rgba(0, 0, 0, calc(0.3 * var(--c, 0)));
+}
+
+.fc-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: var(--focus, 50% 50%);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  -webkit-user-drag: none;
+}
+.fc-card:not(.is-empty) .fc-img { opacity: 1; }
+
+/* Placeholder look until a real image exists (matches the Figma colours) */
+.fc-card.is-empty .fc-media { background: linear-gradient(145deg, #e11d63 0%, #8b2fc9 62%, #3b0a8c 100%); }
+.fc-card.is-empty[data-g="1"] .fc-media { background: linear-gradient(160deg, #d62f2f 0%, #c2185b 45%, #4a1a7a 100%); }
+.fc-card.is-empty[data-g="2"] .fc-media { background: linear-gradient(150deg, #3a0a7a 0%, #e03050 58%, #ff8a3d 100%); }
+.fc-card.is-empty[data-g="3"] .fc-media { background: linear-gradient(170deg, #6a0d5a 0%, #b5169a 50%, #f59e0b 100%); }
+.fc-card.is-empty[data-g="4"] .fc-media { background: linear-gradient(145deg, #2f2a52 0%, #d93a3a 52%, #7a0f5d 100%); }
+
+.fc-ph {
+  position: absolute;
+  inset: 0;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6em;
+  color: #fff;
+  text-align: center;
+  opacity: var(--c, 0); /* only the centre card shows the label */
+  pointer-events: none;
+}
+.fc-card.is-empty .fc-ph { display: flex; }
+.fc-ph b {
+  max-width: 6.2em;
+  font-size: 5cqw;
+  font-weight: 300;
+  line-height: 0.95;
+  letter-spacing: -0.06em;
+}
+.fc-ph small { font-size: max(10px, 1cqw); opacity: 0.75; letter-spacing: 0; }
+
+/* ----- yellow glass title + description -----
+   Uses the site's glass button look (src/styles/glass-button.css). The markup is
+   written by hand in index.html so the glass layers are already in place. */
+.fc-caption {
+  margin-top: clamp(22px, 2.4vw, 36px);
+  padding: 0 var(--space-4);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.fc-title-wrap { cursor: default; border-radius: var(--fc-title-radius); }
+.fc-title-wrap .glass-button-shadow::after { border-radius: var(--fc-title-radius); }
+
+.fc-title-wrap .fc-title.glass-button {
+  --fc-size: clamp(1.15rem, 3.05vw, 2.95rem);
+  min-width: clamp(220px, 39vw, 640px);
+  max-width: 92vw;
+  border-radius: var(--fc-title-radius);
+  background-color: var(--fc-yellow);
+  font-size: var(--fc-size);
+  font-weight: 800;
+  line-height: 1.2;
+  text-align: center;
+  cursor: default;
+}
+.fc-title-wrap .fc-title.glass-button::after { border-radius: var(--fc-title-radius); }
+.fc-title-wrap .fc-title .glass-button-text {
+  padding: 0.34em 1.2em;
+  letter-spacing: -0.05em;
+  color: var(--color-ink);
+}
+.fc-title-wrap .fc-title .glass-button-text::after { border-radius: var(--fc-title-radius); }
+
+.fc-title-text,
+.fc-desc {
+  transition: opacity 0.17s ease, transform 0.17s ease, filter 0.17s ease;
+}
+.fc-title-text { display: inline-block; }
+.fc-caption.is-swapping .fc-title-text,
+.fc-caption.is-swapping .fc-desc {
+  opacity: 0;
+  transform: translateY(6px);
+  filter: blur(3px);
+}
+
+.fc-desc {
+  margin: clamp(12px, 1.5vw, 22px) 0 0;
+  max-width: min(92%, 58rem);
+  font-size: clamp(0.95rem, 1.95vw, 2rem);
+  font-weight: 300;
+  line-height: 1.2;
+  letter-spacing: -0.055em;
+  text-wrap: balance;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fc-card-float { animation: none; }
+  .fc-title-text, .fc-desc { transition: none; }
+}
