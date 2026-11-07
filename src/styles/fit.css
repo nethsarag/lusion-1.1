@@ -1,0 +1,119 @@
+/* Fit-to-screen sizing for desktop.
+   The Figma frames are 1440 wide, and every section used to scale with the screen WIDTH only.
+   On a wide, short screen (for example 1920 x 1080 with browser bars) that made each section
+   taller than the window. Here the same designs are scaled by whichever is smaller, the width
+   or the available height, so a whole section (and the Get Started card) fits on one screen.
+
+   Loaded AFTER the other stylesheets. The "html" in front of each selector makes these rules win
+   no matter which order Vite injects the CSS files in. */
+
+:root {
+  /* One design unit. Same as 1vw on tall screens, smaller on short ones.
+     62 = height of the tallest section (Top Features) measured in these units. */
+  --u: min(1vw, max(7px, calc((100svh - var(--nav-h) - 24px) / 62)));
+
+  /* Get Started page scale: 1px on tall screens, down to 0.5px on short ones. */
+  --s: min(1px, max(0.5px, calc((100svh - 70px) / 1160)));
+}
+
+/* ---------- Top Features / Choose Your Plan / Meet Team Tesera (desktop) ---------- */
+@media (min-width: 861px) {
+  html .features,
+  html .pricing,
+  html .about {
+    padding-top: var(--nav-h);
+    padding-bottom: 24px;
+  }
+
+  /* Top Features */
+  html .features { --fc-title-radius: clamp(14px, calc(1.5 * var(--u)), 22px); }
+  html .features-head h2 { font-size: clamp(2rem, calc(5.6 * var(--u)), 5.4rem); }
+  html .features-sub { font-size: clamp(1.1rem, calc(3.15 * var(--u)), 3.1rem); }
+  html .fc {
+    width: min(100%, calc(100 * var(--u)), 1680px);
+    margin: clamp(14px, calc(2.5 * var(--u)), 38px) auto 0;
+  }
+  html .fc-caption { margin-top: clamp(14px, calc(2.4 * var(--u)), 36px); }
+  html .fc-title-wrap .fc-title.glass-button {
+    --fc-size: clamp(1rem, calc(3.05 * var(--u)), 2.95rem);
+    min-width: clamp(220px, calc(39 * var(--u)), 640px);
+  }
+  html .fc-desc {
+    margin: clamp(8px, calc(1.5 * var(--u)), 22px) 0 0;
+    font-size: clamp(0.85rem, calc(1.95 * var(--u)), 2rem);
+  }
+
+  /* Choose Your Plan */
+  html .pricing-head h2 { font-size: clamp(2rem, calc(5.6 * var(--u)), 5.4rem); }
+  html .pricing-sub { font-size: clamp(1.1rem, calc(3.15 * var(--u)), 3.1rem); }
+  html .pc-grid {
+    --pc-w: clamp(240px, calc(28.96 * var(--u)), 500px);
+    gap: clamp(24px, calc(8.1 * var(--u)), 140px);
+    margin: clamp(24px, calc(5.7 * var(--u)), 96px) auto 0;
+  }
+
+  /* Meet Team Tesera */
+  html .about-head h2 { font-size: clamp(2rem, calc(5.6 * var(--u)), 5.4rem); }
+  html .about-sub { font-size: clamp(1.1rem, calc(3.15 * var(--u)), 3.1rem); }
+  html .about-grid {
+    --pf-w: clamp(220px, calc(26.875 * var(--u)), 460px);
+    gap: clamp(24px, calc(3.9 * var(--u)), 72px);
+    margin: clamp(24px, calc(4.4 * var(--u)), 72px) auto 0;
+  }
+}
+
+/* Each of the three sections becomes one full screen, content centred below the navbar.
+   Skipped on very short windows, where they simply stack and scroll. */
+@media (min-width: 861px) and (min-height: 560px) {
+  html .features,
+  html .pricing,
+  html .about {
+    min-height: 100svh;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* the section already leaves room for the navbar, so anchor links stop at its very top */
+    scroll-margin-top: calc(var(--nav-h) * -1);
+  }
+}
+
+/* ---------- Get Started page (desktop and tablet) ---------- */
+@media (min-width: 561px) {
+  html .gs-page { padding: calc(96 * var(--s)) var(--space-4) calc(40 * var(--s)); }
+
+  html .gs-card {
+    padding: calc(92 * var(--s)) clamp(24px, 8vw, 78px) calc(44 * var(--s));
+    border-radius: calc(46 * var(--s));
+  }
+  html .gs-badge {
+    top: calc(-72 * var(--s));
+    width: calc(144 * var(--s));
+    height: calc(144 * var(--s));
+  }
+  html .gs-mascot-slot { width: calc(90 * var(--s)); height: calc(90 * var(--s)); }
+
+  html .gs-card h1 { font-size: calc(46 * var(--s)); margin-bottom: calc(14 * var(--s)); }
+  html #gs-description {
+    margin: 0 0 calc(20 * var(--s));
+    font-size: max(13px, calc(16 * var(--s)));
+  }
+
+  html .gs-form { gap: calc(18 * var(--s)); }
+  html .gs-form input:not([type="hidden"]) {
+    height: calc(58 * var(--s));
+    font-size: max(14px, calc(18.4 * var(--s)));
+  }
+  html .gs-role-label { padding-top: calc(15 * var(--s)); font-size: max(14px, calc(18.4 * var(--s))); }
+  html .gs-role .glass-button-text {
+    padding-top: calc(13.6 * var(--s));
+    padding-bottom: calc(13.6 * var(--s));
+    font-size: max(14px, calc(18.4 * var(--s)));
+  }
+  html .gs-form > .glass-button-wrap .glass-button-text {
+    padding-top: calc(15.2 * var(--s));
+    padding-bottom: calc(15.2 * var(--s));
+    font-size: max(14px, calc(17.6 * var(--s)));
+  }
+  html .gs-note { margin-top: calc(24 * var(--s)); }
+}

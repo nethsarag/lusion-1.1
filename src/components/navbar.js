@@ -2,7 +2,9 @@ import "../styles/navbar.css";
 
 // Edit these arrays to change the navbar on every page.
 export const NAV_LINKS = [
-  { label: "Pricing", href: "/pricing.html" },
+  { label: "Home", href: "/#home" },
+  { label: "Features", href: "/#features" },
+  { label: "Pricing", href: "/#pricing" },
   { label: "Resources", href: "/resources.html" },
   { label: "About us", href: "/#about" },
   { label: "Log in", href: "/login.html" },
@@ -30,6 +32,54 @@ function makeLink({ label, href }, className) {
   if (href === "#") a.addEventListener("click", (e) => e.preventDefault());
   li.append(a);
   return li;
+}
+
+// Adds .is-scrolled to the navbar once the page is scrolled past the hero
+// (or 24px on pages that have no hero). The CSS does the frosted-glass look.
+function watchScroll(header) {
+  const hero = document.getElementById("home");
+  let queued = false;
+
+  const update = () => {
+    queued = false;
+    const limit = hero ? hero.offsetTop + hero.offsetHeight - header.offsetHeight : 24;
+    header.classList.toggle("is-scrolled", window.scrollY > Math.max(limit, 24));
+  };
+  const queue = () => {
+    if (queued) return;
+    queued = true;
+    requestAnimationFrame(update);
+  };
+
+  window.addEventListener("scroll", queue, { passive: true });
+  window.addEventListener("resize", queue);
+  update();
+}
+
+// On the home page, keeps the yellow underline on the link of the section you are viewing.
+function watchSections(list) {
+  const onHome = location.pathname === "/" || location.pathname === "/index.html";
+  if (!onHome || !("IntersectionObserver" in window)) return;
+
+  const links = new Map();
+  list.querySelectorAll('a[href^="/#"]').forEach((a) => {
+    const id = a.getAttribute("href").slice(2);
+    if (document.getElementById(id)) links.set(id, a);
+  });
+  if (!links.size) return;
+
+  const show = (id) =>
+    links.forEach((a, key) => {
+      if (key === id) a.setAttribute("aria-current", "location");
+      else a.removeAttribute("aria-current");
+    });
+
+  // a section counts as "current" while it crosses the middle of the screen
+  const io = new IntersectionObserver(
+    (entries) => entries.forEach((e) => e.isIntersecting && show(e.target.id)),
+    { rootMargin: "-45% 0px -50% 0px" }
+  );
+  links.forEach((_, id) => io.observe(document.getElementById(id)));
 }
 
 export function mountNavbar() {
@@ -99,4 +149,7 @@ export function mountNavbar() {
 
   inner.append(brand, toggle, list);
   header.replaceChildren(inner);
+
+  watchScroll(header);
+  watchSections(list);
 }
