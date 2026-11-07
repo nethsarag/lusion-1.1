@@ -25,14 +25,14 @@ th { color: var(--color-muted); font-weight: 600; font-size: 0.95rem; }
 .auth { max-width: 420px; margin: 0 auto; }
 .auth form { display: grid; gap: var(--space-2); }
 label { font-weight: 600; margin-top: var(--space-2); }
-input, select { font: inherit; padding: 12px 14px; border: 1px solid var(--color-line); border-radius: var(--radius-s); background: #fff; color: var(--color-ink); }
+input, select { min-width: 0; max-width: 100%; font: inherit; padding: 12px 14px; border: 1px solid var(--color-line); border-radius: var(--radius-s); background: #fff; color: var(--color-ink); }
 input:focus-visible, select:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 1px; }
 .auth .btn:not(.glass-button) { margin-top: var(--space-3); }
 .auth .glass-button-wrap { display: block; margin-top: var(--space-3); }
 .auth .glass-button { display: block; width: 100%; }
 .error { color: #b3261e; min-height: 1.4em; margin: var(--space-2) 0 0; }
-.chat { display: flex; gap: var(--space-2); max-width: 560px; }
-.chat input { flex: 1; }
+.chat { display: flex; gap: var(--space-2); width: 100%; max-width: 560px; }
+.chat input { flex: 1; min-width: 0; }
 .chat .glass-button-wrap { align-self: center; }
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
 .foot { max-width: var(--page-width); margin: 0 auto; padding: var(--space-4); color: var(--color-muted); font-size: 0.9rem; border-top: 1px solid var(--color-line); }

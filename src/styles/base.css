@@ -9,6 +9,8 @@ html {
 
 body {
   margin: 0;
+  max-width: 100%;
+  overflow-x: hidden; /* older phones (before iOS 16 / Chrome 90) do not know "clip" */
   padding-top: var(--nav-h); /* the navbar is fixed, so reserve its space */
   background: var(--color-bg);
   color: var(--color-ink);
@@ -16,7 +18,13 @@ body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
 }
+/* "clip" cuts off anything that sticks out sideways without making the page scrollable
+   sideways, and (unlike "hidden") does not turn <body> into a scroll container. */
+@supports (overflow: clip) {
+  body { overflow-x: clip; }
+}
 
+img, svg, video, canvas { max-width: 100%; }
 a { color: inherit; }
 
 :focus-visible {
