@@ -149,3 +149,17 @@ These are starting guesses. Record some reps, compare the numbers with what a co
 ## Contributing
 
 Issues and pull requests are welcome. If you have lifting or coaching experience, feedback on the form rules and thresholds is especially valuable.
+
+## Google sign-in
+
+The **Continue with Google** button on the Login and Get Started pages opens Google's sign-in popup and reads the user's name, email and photo from Google.
+
+1. In [Google Cloud Console](https://console.cloud.google.com/apis/credentials) create an **OAuth client ID** of type **Web application**.
+2. Under **Authorized JavaScript origins** add every origin you use, for example `http://localhost:5173` and your production URL (no path, no trailing slash). No redirect URI is needed.
+3. On the **OAuth consent screen**, add yourself under **Test users** while the app is in Testing mode.
+4. Copy `.env.example` to `.env` **in the project root** (next to `package.json`) and set `VITE_GOOGLE_CLIENT_ID`.
+5. Restart `npm run dev` (Vite only reads `.env` at startup).
+
+Notes:
+- Google sign-in creates Athlete or Coach accounts only. Admin is not available through Google.
+- This is still a demo build with no backend, so the signed-in user is kept in `localStorage`. Before real launch, send the access token to your server and verify it there before trusting the user's identity.

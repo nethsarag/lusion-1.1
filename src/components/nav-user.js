@@ -91,6 +91,16 @@ function userPill(user) {
   avatar.className = "nav-avatar";
   avatar.setAttribute("aria-hidden", "true");
   avatar.textContent = (user.name || "A").trim().charAt(0).toUpperCase();
+  if (user.picture) {
+    // Google profile photo; falls back to the initial if it fails to load
+    const img = document.createElement("img");
+    img.src = user.picture;
+    img.alt = "";
+    img.referrerPolicy = "no-referrer";
+    img.addEventListener("error", () => img.remove());
+    img.addEventListener("load", () => avatar.firstChild?.nodeType === 3 && avatar.firstChild.remove(), { once: true });
+    avatar.append(img);
+  }
   const name = document.createElement("span");
   name.className = "nav-username";
   name.textContent = user.name || "Athlete";

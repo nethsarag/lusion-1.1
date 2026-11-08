@@ -114,13 +114,10 @@ document.addEventListener("keydown", (e) => {
   }
 });
 
-// ---- Google (not wired up in the demo build) -------------------------------------
+// ---- Google (sign-in itself is handled by google-auth.js) -------------------------
 const google = $("google-btn");
 google.addEventListener("pointerenter", () => mascot.reactNow("wink", 1));
-google.addEventListener("click", () => {
-  mascot.reactNow("thinking", 1.6);
-  mascot.say("Google sign-in isn't connected in this demo.", 3200);
-});
+google.addEventListener("click", () => mascot.reactNow("thinking", 1.6));
 
 // ---- Submit result (auth.js sends this) --------------------------------------------
 document.addEventListener("auth:result", (e) => {

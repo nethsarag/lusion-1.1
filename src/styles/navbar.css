@@ -233,6 +233,8 @@
   font-weight: 600;
   letter-spacing: 0;
 }
+.nav-avatar { overflow: hidden; }
+.nav-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .nav-username { max-width: 11ch; overflow: hidden; text-overflow: ellipsis; }
 
 /* Small dropdowns under Announcements and the username */
