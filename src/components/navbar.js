@@ -1,4 +1,6 @@
 import "../styles/navbar.css";
+import { getUser } from "../dashboard/store.js";
+import { buildUserItems } from "./nav-user.js";
 
 // Edit these arrays to change the navbar on every page.
 export const NAV_LINKS = [
@@ -126,8 +128,13 @@ export function mountNavbar() {
   const list = document.createElement("ul");
   list.className = "nav-links";
   list.id = "nav-links";
-  NAV_LINKS.forEach((l) => list.append(makeLink(l)));
-  list.append(makeLink(NAV_CTA, "nav-cta"));
+  const user = getUser();
+  if (user) {
+    buildUserItems(list, user, makeLink); // logged in: Home, Dashboard, Announcements, username
+  } else {
+    NAV_LINKS.forEach((l) => list.append(makeLink(l)));
+    list.append(makeLink(NAV_CTA, "nav-cta"));
+  }
 
   const closeMenu = () => {
     header.classList.remove("open");
