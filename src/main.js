@@ -5,6 +5,7 @@ import { RepDetector } from "./reps.js";
 import { evaluateRep } from "./rules.js";
 import { updateGuide, setPhase, noPerson } from "./guide.js";
 import { initResults, showResults, isResultsOpen } from "./results.js";
+import { startTraining, logRep } from "./dashboard/store.js";
 
 const video = document.getElementById("video");
 const canvas = document.getElementById("overlay");
@@ -12,6 +13,7 @@ const ctx = canvas.getContext("2d");
 const statusEl = document.getElementById("status");
 const startBtn = document.getElementById("start");
 const stateEl = document.getElementById("state");
+const weightEl = document.getElementById("weight");
 
 let landmarker = null;
 let lastVideoTime = -1;
@@ -27,7 +29,16 @@ const detector = new RepDetector({
   },
   onRep: (rep) => {
     repCount++;
-    showResults(repCount, rep, evaluateRep(rep)); // detection pauses until "Next rep"
+    const evaluation = evaluateRep(rep);
+    // Save the rep for the dashboard (streak, volume load, peak velocity, joint ROM, status)
+    logRep({
+      weight: Math.max(0, parseFloat(weightEl?.value) || 0), // kg on the bar
+      peakVelocity: +rep.peakVelocity.toFixed(2),
+      rom: rep.rom,
+      passed: evaluation.checks.filter((c) => c.pass).length,
+      total: evaluation.checks.length,
+    });
+    showResults(repCount, rep, evaluation); // detection pauses until "Next rep"
   },
 });
 
@@ -112,6 +123,7 @@ startBtn.addEventListener("click", async () => {
     await initLandmarker();
     await startCamera();
     setPhase("WAIT_SETUP");
+    startTraining(); // counts today towards the streak
     statusEl.textContent = "Running. Stand sideways so your full body is visible.";
     loop();
   } catch (err) {

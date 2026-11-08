@@ -4,6 +4,56 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="/src/styles/base.css" /><link rel="stylesheet" href="/src/styles/pages.css" /></head>
-<body><header id="navbar"></header><main class="page">
-<h1>Your training</h1><div class="grid3"><article class="card"><h3>Last session score</h3><p>82 / 100</p></article><article class="card"><h3>Reps this week</h3><p>24</p></article><article class="card"><h3>Top cue</h3><p>Sit deeper in the catch.</p></article></div><div class="actions"><a class="btn btn-primary" href="/session.html">Start a session</a></div><h2>Recent reps</h2><div class="table-wrap"><table><thead><tr><th scope="col">Date</th><th scope="col">Rep</th><th scope="col">Score</th><th scope="col">Cues</th></tr></thead><tbody><tr><td>Mon</td><td>1</td><td>78</td><td>Chest higher at the start.</td></tr><tr><td>Mon</td><td>2</td><td>84</td><td>Lock your elbows overhead.</td></tr><tr><td>Wed</td><td>1</td><td>86</td><td>Sit deeper in the catch.</td></tr></tbody></table></div><h2>Ask Lusion AI</h2><form class="chat" onsubmit="return false"><label class="sr" for="q">Question</label><input id="q" placeholder="How is my progress?" /><button class="btn btn-primary">Send</button></form><p class="note">Sample data for layout review. It will be replaced by real session data.</p></main><footer class="foot">Lusion AI is an early MVP. Feedback is guidance, not a replacement for a qualified coach.</footer>
-<script type="module" src="/src/nav-init.js"></script></body></html>
+<body><header id="navbar"></header>
+<main class="page dash">
+  <div class="dash-shell">
+    <section class="dash-main" aria-labelledby="dash-hello">
+      <h1 id="dash-hello" class="dash-hello">Hello! <span id="dash-name">Athlete</span></h1>
+
+      <div class="dash-actions">
+        <a class="btn btn-primary dash-start" href="/session.html" data-glass-size="lg">
+          <span class="dash-plus" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><circle cx="12" cy="12" r="10.5" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M12 7v10M7 12h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>Start Live Training
+        </a>
+        <span class="dash-cam" title="Live training uses your camera">
+          <svg viewBox="0 0 24 24" width="22" height="22" role="img" aria-label="Uses your camera"><path d="M4 8.5A1.5 1.5 0 0 1 5.5 7h2l1.1-1.6a1 1 0 0 1 .8-.4h5.2a1 1 0 0 1 .8.4L16.5 7h2A1.5 1.5 0 0 1 20 8.5v9a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 17.5Z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><circle cx="12" cy="13" r="3.2" fill="none" stroke="currentColor" stroke-width="1.4"/></svg>
+        </span>
+      </div>
+
+      <div class="dash-stats">
+        <article class="dash-card dash-stat">
+          <h2 class="dash-pill">Streak</h2>
+          <p class="dash-big" id="stat-streak">00</p>
+          <p class="dash-unit" id="stat-streak-unit">Days</p>
+        </article>
+        <article class="dash-card dash-stat">
+          <h2 class="dash-pill">Peak Velocity</h2>
+          <p class="dash-big" id="stat-velocity">--</p>
+          <p class="dash-unit">m/s</p>
+        </article>
+        <article class="dash-card dash-stat dash-stat--status">
+          <h2 class="dash-pill">Overall Status</h2>
+          <p class="dash-big" id="stat-status">--</p>
+          <p class="dash-hint" id="stat-status-msg">Finish a live session to see your status.</p>
+        </article>
+      </div>
+
+      <section class="dash-card dash-chart" aria-labelledby="chart-title">
+        <div class="dash-chart-head">
+          <h2 id="chart-title">Weekly Volume Load</h2>
+          <div class="dash-chart-meta">
+            <span id="chart-total" class="dash-chart-total"></span>
+            <label class="sr" for="chart-group">Muscle group</label>
+            <select id="chart-group"></select>
+          </div>
+        </div>
+        <div class="dash-chart-body" id="chart-body"></div>
+      </section>
+    </section>
+
+    <aside class="dash-rom" aria-label="Joint range of motion" id="rom-panel"></aside>
+  </div>
+</main>
+<footer class="foot">Lusion AI is an early MVP. Feedback is guidance, not a replacement for a qualified coach.</footer>
+<script type="module" src="/src/nav-init.js"></script>
+<script type="module" src="/src/mascot-init.js"></script>
+<script type="module" src="/src/dashboard/dashboard.js"></script></body></html>

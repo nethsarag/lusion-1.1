@@ -175,3 +175,101 @@
   .nav-links .glass-button-wrap { display: block; margin-top: var(--space-2); }
   .nav-links .glass-button { display: block; width: 100%; text-align: center; }
 }
+/* ---- Logged-in navbar: Home, Dashboard, Announcements, username pill ---- */
+.nav-links.is-user { justify-content: flex-start; gap: clamp(20px, 3vw, 40px); }
+.nav-links.is-user > li:nth-child(3) { margin-left: auto; margin-right: auto; }
+.nav-links.is-user > li { position: relative; }
+
+/* Announcements: outlined pill with a bell. No underline here. */
+.nav-announce {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding: 9px 26px;
+  border: 1px solid var(--color-ink);
+  border-radius: var(--radius-s);
+  background: transparent;
+  color: var(--color-ink);
+  font: inherit;
+  font-size: clamp(1rem, 1.25vw, 1.2rem);
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+.nav-announce:hover { background: rgba(0, 0, 0, 0.04); }
+.nav-bell { position: absolute; top: -12px; right: -14px; display: grid; place-items: center; line-height: 0; }
+.nav-badge {
+  position: absolute;
+  top: -2px;
+  right: -4px;
+  min-width: 15px;
+  height: 15px;
+  padding: 0 3px;
+  border-radius: 8px;
+  background: var(--color-ink);
+  color: #fff;
+  font-size: 0.62rem;
+  font-weight: 600;
+  line-height: 15px;
+  text-align: center;
+}
+
+/* Username pill: the yellow glass button with an avatar circle */
+.nav-links .nav-user .glass-button-text {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0.5rem 1.5rem 0.5rem 0.5rem;
+}
+.nav-avatar {
+  display: grid;
+  place-items: center;
+  width: 2.1rem;
+  height: 2.1rem;
+  border-radius: 50%;
+  background: #d9d9d9;
+  border: 1px solid var(--color-ink);
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+.nav-username { max-width: 11ch; overflow: hidden; text-overflow: ellipsis; }
+
+/* Small dropdowns under Announcements and the username */
+.nav-popover {
+  position: absolute;
+  top: calc(100% + 14px);
+  z-index: 60;
+  min-width: 240px;
+  padding: 8px;
+  border: 1px solid var(--color-line);
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.14);
+  text-align: left;
+}
+.nav-popover[hidden] { display: none; }
+.nav-popover--announce { left: 50%; transform: translateX(-50%); }
+.nav-popover--user { right: 0; min-width: 200px; }
+.nav-note { display: grid; gap: 2px; margin: 0; padding: 10px 12px; font-size: 0.9rem; color: var(--color-muted); }
+.nav-note strong { color: var(--color-ink); font-weight: 600; }
+.nav-menu-item {
+  display: block;
+  width: 100%;
+  padding: 10px 12px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  font: inherit;
+  font-size: 0.95rem;
+  text-align: left;
+  cursor: pointer;
+}
+.nav-menu-item:hover { background: var(--color-nav-pill); }
+
+@media (max-width: 720px) {
+  .nav-links.is-user > li:nth-child(3) { margin: 8px 0; }
+  .nav-announce { width: 100%; justify-content: flex-start; }
+  .nav-bell { top: 50%; right: 14px; transform: translateY(-50%); }
+  .nav-popover { position: static; transform: none; margin-top: 8px; box-shadow: none; }
+}
